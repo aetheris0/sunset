@@ -1,0 +1,682 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Sunset Games</title>
+
+  <link rel="icon" type="image/png" href="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+
+    :root {
+
+      --bg: #050505;
+
+      --bg-elevated: #0c0c0c;
+
+      --card: rgba(18, 12, 10, 0.75);
+
+      --card-border: rgba(255, 140, 80, 0.18);
+
+      --text: #f5e6d3;
+
+      --text-muted: #c9a88a;
+
+      --accent: #ff8c4a;
+
+      --accent-soft: #ffb07a;
+
+      --glow: rgba(255, 120, 50, 0.35);
+
+      --sunset-1: #ff6b35;
+
+      --sunset-2: #f7c59f;
+
+      --sunset-3: #ff9a5c;
+
+    }
+
+    * {
+
+      margin: 0;
+
+      padding: 0;
+
+      box-sizing: border-box;
+
+    }
+
+    html, body {
+
+      height: 100%;
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+
+      overflow-x: hidden;
+
+    }
+
+    body {
+
+      min-height: 100vh;
+
+      position: relative;
+
+    }
+
+    /* Soft ambient gradient */
+
+    .bg-glow {
+
+      position: fixed;
+
+      inset: 0;
+
+      pointer-events: none;
+
+      z-index: 0;
+
+      background:
+
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 100, 40, 0.18), transparent 60%),
+
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255, 80, 30, 0.08), transparent 50%),
+
+        radial-gradient(ellipse 50% 30% at 10% 70%, rgba(255, 140, 60, 0.06), transparent 50%);
+
+    }
+
+    /* Subtle animated orbs */
+
+    .orb {
+
+      position: fixed;
+
+      border-radius: 50%;
+
+      filter: blur(80px);
+
+      opacity: 0.25;
+
+      pointer-events: none;
+
+      z-index: 0;
+
+      animation: float 18s ease-in-out infinite;
+
+    }
+
+    .orb-1 {
+
+      width: 320px;
+
+      height: 320px;
+
+      background: var(--sunset-1);
+
+      top: -80px;
+
+      left: 10%;
+
+      animation-delay: 0s;
+
+    }
+
+    .orb-2 {
+
+      width: 260px;
+
+      height: 260px;
+
+      background: var(--sunset-3);
+
+      bottom: 5%;
+
+      right: 5%;
+
+      animation-delay: -6s;
+
+    }
+
+    .orb-3 {
+
+      width: 180px;
+
+      height: 180px;
+
+      background: #ffb070;
+
+      top: 40%;
+
+      left: -60px;
+
+      animation-delay: -12s;
+
+    }
+
+    @keyframes float {
+
+      0%, 100% { transform: translate(0, 0) scale(1); }
+
+      33% { transform: translate(30px, -20px) scale(1.05); }
+
+      66% { transform: translate(-20px, 15px) scale(0.95); }
+
+    }
+
+    .container {
+
+      position: relative;
+
+      z-index: 1;
+
+      max-width: 980px;
+
+      margin: 0 auto;
+
+      padding: 3.5rem 1.5rem 4rem;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      min-height: 100vh;
+
+    }
+
+    /* Header */
+
+    header {
+
+      text-align: center;
+
+      margin-bottom: 3.25rem;
+
+      animation: fadeUp 0.8s ease-out both;
+
+    }
+
+    .logo-wrap {
+
+      position: relative;
+
+      display: inline-block;
+
+      margin-bottom: 1.4rem;
+
+    }
+
+    .logo {
+
+      width: 96px;
+
+      height: 96px;
+
+      object-fit: cover;
+
+      border-radius: 28px;
+
+      border: 1px solid rgba(255, 160, 100, 0.25);
+
+      box-shadow:
+
+        0 0 0 1px rgba(255, 120, 50, 0.1),
+
+        0 12px 40px rgba(0, 0, 0, 0.55),
+
+        0 0 48px var(--glow);
+
+      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+
+    }
+
+    .logo-wrap:hover .logo {
+
+      transform: scale(1.06) rotate(-2deg);
+
+      box-shadow:
+
+        0 0 0 1px rgba(255, 140, 70, 0.35),
+
+        0 16px 48px rgba(0, 0, 0, 0.6),
+
+        0 0 64px rgba(255, 120, 50, 0.45);
+
+    }
+
+    .logo-ring {
+
+      position: absolute;
+
+      inset: -8px;
+
+      border-radius: 34px;
+
+      border: 1px solid transparent;
+
+      background: linear-gradient(135deg, rgba(255, 140, 70, 0.4), transparent 50%, rgba(255, 180, 100, 0.25)) border-box;
+
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+
+      mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+
+      -webkit-mask-composite: destination-out;
+
+      mask-composite: exclude;
+
+      pointer-events: none;
+
+      opacity: 0.7;
+
+    }
+
+    h1 {
+
+      font-size: clamp(2rem, 5vw, 2.75rem);
+
+      font-weight: 600;
+
+      letter-spacing: -0.03em;
+
+      background: linear-gradient(135deg, #fff5eb 0%, var(--accent-soft) 45%, var(--sunset-1) 100%);
+
+      -webkit-background-clip: text;
+
+      background-clip: text;
+
+      color: transparent;
+
+      margin-bottom: 0.55rem;
+
+      line-height: 1.15;
+
+    }
+
+    .tagline {
+
+      font-size: 1.05rem;
+
+      font-weight: 400;
+
+      color: var(--text-muted);
+
+      letter-spacing: 0.02em;
+
+    }
+
+    /* Games grid */
+
+    .games {
+
+      display: grid;
+
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+      gap: 1.5rem;
+
+      width: 100%;
+
+      animation: fadeUp 0.9s ease-out 0.15s both;
+
+    }
+
+    .card {
+
+      position: relative;
+
+      background: var(--card);
+
+      border: 1px solid var(--card-border);
+
+      border-radius: 22px;
+
+      padding: 1.75rem 1.6rem 1.5rem;
+
+      backdrop-filter: blur(16px);
+
+      -webkit-backdrop-filter: blur(16px);
+
+      overflow: hidden;
+
+      transition:
+
+        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+
+        border-color 0.35s ease,
+
+        box-shadow 0.35s ease;
+
+      text-decoration: none;
+
+      color: inherit;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0.85rem;
+
+    }
+
+    .card::before {
+
+      content: '';
+
+      position: absolute;
+
+      inset: 0;
+
+      background: linear-gradient(145deg, rgba(255, 140, 70, 0.08) 0%, transparent 55%);
+
+      opacity: 0;
+
+      transition: opacity 0.35s ease;
+
+      pointer-events: none;
+
+    }
+
+    .card:hover {
+
+      transform: translateY(-6px);
+
+      border-color: rgba(255, 150, 90, 0.4);
+
+      box-shadow:
+
+        0 20px 50px rgba(0, 0, 0, 0.45),
+
+        0 0 40px rgba(255, 110, 40, 0.12);
+
+    }
+
+    .card:hover::before {
+
+      opacity: 1;
+
+    }
+
+    .card-icon {
+
+      width: 52px;
+
+      height: 52px;
+
+      border-radius: 14px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 1.55rem;
+
+      background: linear-gradient(145deg, rgba(255, 120, 50, 0.2), rgba(255, 80, 30, 0.08));
+
+      border: 1px solid rgba(255, 140, 80, 0.22);
+
+      flex-shrink: 0;
+
+    }
+
+    .card h2 {
+
+      font-size: 1.28rem;
+
+      font-weight: 600;
+
+      letter-spacing: -0.02em;
+
+      color: #fff2e6;
+
+      line-height: 1.25;
+
+    }
+
+    .card p {
+
+      font-size: 0.92rem;
+
+      color: var(--text-muted);
+
+      line-height: 1.5;
+
+      flex-grow: 1;
+
+    }
+
+    .card-cta {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 0.4rem;
+
+      font-size: 0.88rem;
+
+      font-weight: 500;
+
+      color: var(--accent-soft);
+
+      margin-top: 0.35rem;
+
+      transition: gap 0.25s ease, color 0.25s ease;
+
+    }
+
+    .card:hover .card-cta {
+
+      gap: 0.65rem;
+
+      color: var(--accent);
+
+    }
+
+    .card-cta svg {
+
+      width: 16px;
+
+      height: 16px;
+
+      transition: transform 0.25s ease;
+
+    }
+
+    .card:hover .card-cta svg {
+
+      transform: translateX(3px);
+
+    }
+
+    /* Footer */
+
+    footer {
+
+      margin-top: auto;
+
+      padding-top: 3.5rem;
+
+      text-align: center;
+
+      animation: fadeUp 1s ease-out 0.3s both;
+
+    }
+
+    footer p {
+
+      font-size: 0.82rem;
+
+      color: rgba(201, 168, 138, 0.55);
+
+      letter-spacing: 0.03em;
+
+    }
+
+    @keyframes fadeUp {
+
+      from {
+
+        opacity: 0;
+
+        transform: translateY(22px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+      }
+
+    }
+
+    /* Responsive */
+
+    @media (max-width: 560px) {
+
+      .container {
+
+        padding: 2.5rem 1.15rem 3rem;
+
+      }
+
+      .logo {
+
+        width: 80px;
+
+        height: 80px;
+
+        border-radius: 22px;
+
+      }
+
+      .logo-ring {
+
+        border-radius: 28px;
+
+      }
+
+      .card {
+
+        padding: 1.45rem 1.3rem 1.3rem;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="bg-glow"></div>
+
+  <div class="orb orb-1"></div>
+
+  <div class="orb orb-2"></div>
+
+  <div class="orb orb-3"></div>
+
+  <div class="container">
+
+    <header>
+
+      <div class="logo-wrap">
+
+        <div class="logo-ring"></div>
+
+        <img src="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" alt="Sunset" class="logo" />
+
+      </div>
+
+      <h1>Sunset</h1>
+
+      <p class="tagline">pick a game &amp; play</p>
+
+    </header>
+
+    <div class="games">
+
+      <a href="clgoogledino.html" class="card">
+
+        <div class="card-icon">🦖</div>
+
+        <h2>google dino cheats</h2>
+
+        <p>Classic Chrome T-Rex runner with a few extras. Jump, duck, and survive the desert.</p>
+
+        <span class="card-cta">
+
+          Play
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+
+          </svg>
+
+        </span>
+
+      </a>
+
+      <a href="level-67.html" class="card">
+
+        <div class="card-icon">🌀</div>
+
+        <h2>level 67 (gd copy)</h2>
+
+        <p>Geometry Dash inspired platformer. Hit the levels and chase that high score.</p>
+
+        <span class="card-cta">
+
+          Play
+
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+
+          </svg>
+
+        </span>
+
+      </a>
+
+    </div>
+
+    <footer>
+
+      <p>sunset games</p>
+
+    </footer>
+
+  </div>
+
+</body>
+
+</html>
+
