@@ -22,6 +22,8 @@
       --sunset-1: #ff6b35;
       --sunset-2: #f7c59f;
       --sunset-3: #ff9a5c;
+      --panel: rgba(14, 10, 8, 0.85);
+      --panel-border: rgba(255, 140, 80, 0.15);
     }
 
     * {
@@ -43,7 +45,6 @@
       position: relative;
     }
 
-    /* Soft ambient gradient */
     .bg-glow {
       position: fixed;
       inset: 0;
@@ -55,7 +56,6 @@
         radial-gradient(ellipse 50% 30% at 10% 70%, rgba(255, 140, 60, 0.06), transparent 50%);
     }
 
-    /* Subtle animated orbs */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -71,7 +71,6 @@
       background: var(--sunset-1);
       top: -80px;
       left: 10%;
-      animation-delay: 0s;
     }
     .orb-2 {
       width: 260px;
@@ -96,36 +95,41 @@
       66% { transform: translate(-20px, 15px) scale(0.95); }
     }
 
-    .container {
+    .page {
       position: relative;
       z-index: 1;
-      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 1.75rem;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 3.5rem 1.5rem 4rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 2.5rem 1.5rem 3rem;
       min-height: 100vh;
     }
 
-    /* Header */
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     header {
       text-align: center;
-      margin-bottom: 3.25rem;
+      margin-bottom: 2.5rem;
       animation: fadeUp 0.8s ease-out both;
     }
 
     .logo-wrap {
       position: relative;
       display: inline-block;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.2rem;
     }
 
     .logo {
-      width: 96px;
-      height: 96px;
+      width: 88px;
+      height: 88px;
       object-fit: cover;
-      border-radius: 28px;
+      border-radius: 24px;
       border: 1px solid rgba(255, 160, 100, 0.25);
       box-shadow:
         0 0 0 1px rgba(255, 120, 50, 0.1),
@@ -144,8 +148,8 @@
 
     .logo-ring {
       position: absolute;
-      inset: -8px;
-      border-radius: 34px;
+      inset: -7px;
+      border-radius: 30px;
       border: 1px solid transparent;
       background: linear-gradient(135deg, rgba(255, 140, 70, 0.4), transparent 50%, rgba(255, 180, 100, 0.25)) border-box;
       -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
@@ -157,39 +161,37 @@
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-size: clamp(1.9rem, 4.5vw, 2.5rem);
       font-weight: 600;
       letter-spacing: -0.03em;
       background: linear-gradient(135deg, #fff5eb 0%, var(--accent-soft) 45%, var(--sunset-1) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.45rem;
       line-height: 1.15;
     }
 
     .tagline {
-      font-size: 1.05rem;
-      font-weight: 400;
+      font-size: 1rem;
       color: var(--text-muted);
       letter-spacing: 0.02em;
     }
 
-    /* Games grid */
     .games {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
       width: 100%;
-      animation: fadeUp 0.9s ease-out 0.15s both;
+      animation: fadeUp 0.9s ease-out 0.12s both;
     }
 
     .card {
       position: relative;
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-radius: 22px;
-      padding: 1.75rem 1.6rem 1.5rem;
+      border-radius: 18px;
+      padding: 1.35rem 1.25rem 1.2rem;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       overflow: hidden;
@@ -201,7 +203,7 @@
       color: inherit;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
+      gap: 0.7rem;
     }
 
     .card::before {
@@ -215,32 +217,30 @@
     }
 
     .card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-5px);
       border-color: rgba(255, 150, 90, 0.4);
       box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.45),
-        0 0 40px rgba(255, 110, 40, 0.12);
+        0 18px 44px rgba(0, 0, 0, 0.45),
+        0 0 36px rgba(255, 110, 40, 0.12);
     }
 
-    .card:hover::before {
-      opacity: 1;
-    }
+    .card:hover::before { opacity: 1; }
 
     .card-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.55rem;
+      font-size: 1.4rem;
       background: linear-gradient(145deg, rgba(255, 120, 50, 0.2), rgba(255, 80, 30, 0.08));
       border: 1px solid rgba(255, 140, 80, 0.22);
       flex-shrink: 0;
     }
 
     .card h2 {
-      font-size: 1.28rem;
+      font-size: 1.1rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       color: #fff2e6;
@@ -248,79 +248,218 @@
     }
 
     .card p {
-      font-size: 0.92rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.45;
       flex-grow: 1;
     }
 
     .card-cta {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.88rem;
+      gap: 0.35rem;
+      font-size: 0.82rem;
       font-weight: 500;
       color: var(--accent-soft);
-      margin-top: 0.35rem;
+      margin-top: 0.2rem;
       transition: gap 0.25s ease, color 0.25s ease;
     }
 
     .card:hover .card-cta {
-      gap: 0.65rem;
+      gap: 0.55rem;
       color: var(--accent);
     }
 
     .card-cta svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       transition: transform 0.25s ease;
     }
 
-    .card:hover .card-cta svg {
-      transform: translateX(3px);
+    .card:hover .card-cta svg { transform: translateX(3px); }
+
+    .proxies {
+      width: 100%;
+      margin-top: 2rem;
+      animation: fadeUp 1s ease-out 0.2s both;
     }
 
-    /* Footer */
+    .proxies h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .proxy-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .proxy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(255, 120, 50, 0.08);
+      border: 1px solid rgba(255, 140, 80, 0.22);
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .proxy-btn:hover {
+      background: rgba(255, 120, 50, 0.18);
+      border-color: rgba(255, 150, 90, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 100, 40, 0.15);
+    }
+
+    .proxy-btn span {
+      opacity: 0.7;
+      font-size: 0.72rem;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      animation: fadeUp 0.95s ease-out 0.18s both;
+      position: sticky;
+      top: 1.5rem;
+      align-self: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 1.15rem 1.2rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .panel-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent-soft);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .chrono-time {
+      font-size: 1.85rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #fff5eb;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.1;
+    }
+
+    .chrono-date {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .chrono-loc {
+      font-size: 0.82rem;
+      color: rgba(201, 168, 138, 0.75);
+      margin-top: 0.45rem;
+    }
+
+    .weather-city {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #fff2e6;
+      margin-bottom: 0.35rem;
+    }
+
+    .weather-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--accent-soft);
+      text-decoration: none;
+      transition: color 0.2s ease, gap 0.2s ease;
+    }
+
+    .weather-link:hover {
+      color: var(--accent);
+      gap: 0.5rem;
+    }
+
+    .weather-note {
+      font-size: 0.75rem;
+      color: rgba(201, 168, 138, 0.55);
+      margin-top: 0.55rem;
+      line-height: 1.4;
+    }
+
+    .telem-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255, 140, 80, 0.08);
+    }
+
+    .telem-row:last-child { border-bottom: none; }
+
+    .telem-label { color: var(--text-muted); }
+    .telem-value {
+      font-weight: 500;
+      color: #fff2e6;
+      font-variant-numeric: tabular-nums;
+    }
+
     footer {
-      margin-top: auto;
-      padding-top: 3.5rem;
+      margin-top: 2.5rem;
       text-align: center;
       animation: fadeUp 1s ease-out 0.3s both;
     }
 
     footer p {
-      font-size: 0.82rem;
-      color: rgba(201, 168, 138, 0.55);
+      font-size: 0.78rem;
+      color: rgba(201, 168, 138, 0.5);
       letter-spacing: 0.03em;
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(22px);
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding: 2rem 1.15rem 2.5rem;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      .sidebar {
+        position: static;
+        order: -1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       }
     }
 
-    /* Responsive */
     @media (max-width: 560px) {
-      .container {
-        padding: 2.5rem 1.15rem 3rem;
-      }
-      .logo {
-        width: 80px;
-        height: 80px;
-        border-radius: 22px;
-      }
-      .logo-ring {
-        border-radius: 28px;
-      }
-      .card {
-        padding: 1.45rem 1.3rem 1.3rem;
-      }
+      .logo { width: 72px; height: 72px; border-radius: 20px; }
+      .logo-ring { border-radius: 26px; }
+      .card { padding: 1.2rem 1.1rem 1.1rem; }
     }
   </style>
 </head>
@@ -330,105 +469,230 @@
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
 
-  <div class="container">
-    <header>
-      <div class="logo-wrap">
-        <div class="logo-ring"></div>
-        <img src="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" alt="Sunset" class="logo" />
+  <div class="page">
+    <div class="main">
+      <header>
+        <div class="logo-wrap">
+          <div class="logo-ring"></div>
+          <img src="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" alt="Sunset" class="logo" />
+        </div>
+        <h1>Sunset</h1>
+        <p class="tagline">pick a game &amp; play</p>
+      </header>
+
+      <div class="games">
+        <a href="clgoogledino.html" class="card">
+          <div class="card-icon">🦖</div>
+          <h2>google dino cheats</h2>
+          <p>Classic Chrome T-Rex runner with a few extras. Jump, duck, and survive the desert.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="level-67.html" class="card">
+          <div class="card-icon">🌀</div>
+          <h2>level 67 (gd copy)</h2>
+          <p>Geometry Dash inspired platformer. Hit the levels and chase that high score.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="clfruitninja.html" class="card">
+          <div class="card-icon">🍉</div>
+          <h2>fruit ninja</h2>
+          <p>Slice fruit in the classic arcade style. Keep the combo going and avoid the bombs.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="clgdlite.html" class="card">
+          <div class="card-icon">🔷</div>
+          <h2>geometry dash lite</h2>
+          <p>Lightweight Geometry Dash experience. Jump through levels with tight timing.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="clgeometrydashscratch.html" class="card">
+          <div class="card-icon">🟦</div>
+          <h2>geometry dash scratch</h2>
+          <p>Geometry Dash recreated in Scratch. Classic cube jumps and obstacle courses.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="color%20rush.html" class="card">
+          <div class="card-icon">🎨</div>
+          <h2>color rush</h2>
+          <p>Fast-paced color matching challenge. React quick and keep the streak alive.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="grimace.html" class="card">
+          <div class="card-icon">🟣</div>
+          <h2>hide and seek grimace shake</h2>
+          <p>Hide and seek with a Grimace Shake twist. Find or avoid the purple menace.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a href="soccerbros.html" class="card">
+          <div class="card-icon">⚽</div>
+          <h2>soccer bros</h2>
+          <p>2-player soccer action. Score goals and outplay your opponent.</p>
+          <span class="card-cta">
+            Play
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
       </div>
-      <h1>Sunset</h1>
-      <p class="tagline">pick a game &amp; play</p>
-    </header>
 
-    <div class="games">
-      <a href="clgoogledino.html" class="card">
-        <div class="card-icon">🦖</div>
-        <h2>google dino cheats</h2>
-        <p>Classic Chrome T-Rex runner with a few extras. Jump, duck, and survive the desert.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
+      <div class="proxies">
+        <h3>Proxies / Loaders</h3>
+        <div class="proxy-grid">
+          <a class="proxy-btn" href="Luminal%20OS.html">Luminal OS</a>
+          <a class="proxy-btn" href="GUST%20_%20by%20Nautilus%20Labs.html">GUST <span>Nautilus</span></a>
+          <a class="proxy-btn" href="storm-auto-loader.html">Storm</a>
+          <a class="proxy-btn" href="Truffled%20(1).html">Truffled</a>
+          <a class="proxy-btn" href="Blizzard.html">Blizzard</a>
+          <a class="proxy-btn" href="arctic.html">Arctic</a>
+          <a class="proxy-btn" href="gn.html">GN</a>
+        </div>
+      </div>
 
-      <a href="level-67.html" class="card">
-        <div class="card-icon">🌀</div>
-        <h2>level 67 (gd copy)</h2>
-        <p>Geometry Dash inspired platformer. Hit the levels and chase that high score.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
-
-      <a href="clfruitninja.html" class="card">
-        <div class="card-icon">🍉</div>
-        <h2>fruit ninja</h2>
-        <p>Slice fruit in the classic arcade style. Keep the combo going and avoid the bombs.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
-
-      <a href="clgdlite.html" class="card">
-        <div class="card-icon">🔷</div>
-        <h2>geometry dash lite</h2>
-        <p>Lightweight Geometry Dash experience. Jump through levels with tight timing.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
-
-      <a href="clgeometrydashscratch.html" class="card">
-        <div class="card-icon">🟦</div>
-        <h2>geometry dash scratch</h2>
-        <p>Geometry Dash recreated in Scratch. Classic cube jumps and obstacle courses.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
-
-      <a href="color%20rush.html" class="card">
-        <div class="card-icon">🎨</div>
-        <h2>color rush</h2>
-        <p>Fast-paced color matching challenge. React quick and keep the streak alive.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
-
-      <a href="grimace.html" class="card">
-        <div class="card-icon">🟣</div>
-        <h2>hide and seek grimace shake</h2>
-        <p>Hide and seek with a Grimace Shake twist. Find or avoid the purple menace.</p>
-        <span class="card-cta">
-          Play
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </span>
-      </a>
+      <footer>
+        <p>sunset games</p>
+      </footer>
     </div>
 
-    <footer>
-      <p>sunset games</p>
-    </footer>
+    <aside class="sidebar">
+      <div class="panel">
+        <div class="panel-title">◷ Local Chronometer</div>
+        <div class="chrono-time" id="chrono-time">--:--:--</div>
+        <div class="chrono-date" id="chrono-date">—</div>
+        <div class="chrono-loc" id="chrono-loc">Detecting location…</div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">☀ Weather</div>
+        <div class="weather-city" id="weather-city">Your city</div>
+        <a class="weather-link" id="weather-link" href="https://www.google.com/search?q=weather" target="_blank" rel="noopener">
+          View live weather ↗
+        </a>
+        <p class="weather-note">Opens your city’s forecast in a new tab.</p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">◈ Browser Telemetry</div>
+        <div class="telem-row">
+          <span class="telem-label">Frame rate</span>
+          <span class="telem-value" id="telem-fps">— fps</span>
+        </div>
+        <div class="telem-row">
+          <span class="telem-label">JS memory</span>
+          <span class="telem-value" id="telem-mem">—</span>
+        </div>
+        <div class="telem-row">
+          <span class="telem-label">Logical processors</span>
+          <span class="telem-value" id="telem-cores">—</span>
+        </div>
+      </div>
+    </aside>
   </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('chrono-time').textContent = now.toLocaleTimeString([], {
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+      });
+      document.getElementById('chrono-date').textContent = now.toLocaleDateString([], {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    (function detectLocation() {
+      const locEl = document.getElementById('chrono-loc');
+      const cityEl = document.getElementById('weather-city');
+      const weatherLink = document.getElementById('weather-link');
+
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        locEl.textContent = tz ? tz.replace(/_/g, ' ') : (navigator.language || 'Local');
+      } catch (e) {
+        locEl.textContent = 'Local time';
+      }
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            const { latitude, longitude } = pos.coords;
+            try {
+              const res = await fetch(
+                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+              );
+              if (res.ok) {
+                const data = await res.json();
+                const city = data.city || data.locality || data.principalSubdivision || 'Your area';
+                const region = data.principalSubdivision || '';
+                const country = data.countryName || '';
+                locEl.textContent = [city, region, country].filter(Boolean).join(', ');
+                cityEl.textContent = city;
+                weatherLink.href = `https://www.google.com/search?q=${encodeURIComponent(city + ' weather')}`;
+              }
+            } catch (_) {}
+          },
+          () => {},
+          { timeout: 8000, maximumAge: 600000 }
+        );
+      }
+    })();
+
+    document.getElementById('telem-cores').textContent =
+      navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 'n/a';
+
+    let frames = 0;
+    let lastFpsTime = performance.now();
+    function fpsLoop(now) {
+      frames++;
+      if (now - lastFpsTime >= 1000) {
+        document.getElementById('telem-fps').textContent = frames + ' fps';
+        frames = 0;
+        lastFpsTime = now;
+      }
+      requestAnimationFrame(fpsLoop);
+    }
+    requestAnimationFrame(fpsLoop);
+
+    function updateMemory() {
+      const el = document.getElementById('telem-mem');
+      if (performance.memory) {
+        const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(1);
+        const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(1);
+        el.textContent = used + ' / ' + total + ' MB';
+      } else {
+        el.textContent = 'n/a';
+      }
+    }
+    updateMemory();
+    setInterval(updateMemory, 2000);
+  </script>
 </body>
 </html>
