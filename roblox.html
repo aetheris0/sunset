@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+		/>
+		<title>luminal embed</title>
+
+	<link rel="shortcut icon" content="favicon.webp" />
+
+	<script src="/scram/scramjet.all.js"></script>
+	<script src="/baremux/index.js"></script>
+	
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		
+		body, html {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background-color: white;
+		}
+		
+		#sj-frame {
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
+		
+		#loading {
+			font-family: "Times New Roman", serif;
+			padding: 10px;
+		}
+		
+		#error {
+			display: none;
+			font-family: "Times New Roman", serif;
+			padding: 10px;
+		}
+		
+		#error.show {
+			display: block;
+		}
+	</style>
+	
+	<script src="register-sw.js" defer></script>
+</head>
+
+<body>
+	<div id="loading">loading be patient</div>
+	<div id="error"></div>
+	
+	<script>
+		"use strict";
+		
+		const errorDiv = document.getElementById("error");
+		const loadingDiv = document.getElementById("loading");
+		
+		function showError(message) {
+			errorDiv.textContent = message;
+			errorDiv.classList.add("show");
+			loadingDiv.style.display = "none";
+		}
+		
+		async function initProxy() {
+			try {
+				
+				const hash = window.location.hash.substring(1);
+				
+				if (!hash) {
+					showError("No URL provided. Usage: /embed.html#https://example.com");
+					return;
+				}
+				
+				// Validate URL
+				let url;
+				try {
+					url = new URL(hash);
+				} catch (e) {
+					
+					try {
+						url = new URL("https://" + hash);
+					} catch (e2) {
+						showError("Invalid URL: " + hash);
+						return;
+					}
+				}
+				
+				// scramjet
+				const { ScramjetController } = $scramjetLoadController();
+				
+				const scramjet = new ScramjetController({
+					files: {
+						wasm: "/scram/scramjet.wasm.wasm",
+						all: "/scram/scramjet.all.js",
+						sync: "/scram/scramjet.sync.js",
+					},
+				});
+				
+				scramjet.init();
+				
+				// sw
+				try {
+					await registerSW();
+				} catch (err) {
+					showError("Failed to register service worker: " + err.toString());
+					throw err;
+				}
+				
+				// baremux
+				const connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+				
+				// widp
+				let wispUrl =
+					(location.protocol === "https:" ? "wss" : "ws") +
+					"://" +
+					location.host +
+					"/wisp/";
+				
+				if ((await connection.getTransport()) !== "/libcurl/index.mjs") {
+					await connection.setTransport("/libcurl/index.mjs", [
+						{ websocket: wispUrl },
+					]);
+				}
+				
+				// goon
+				const frame = scramjet.createFrame();
+				frame.frame.id = "sj-frame";
+				
+				// eral
+				loadingDiv.style.display = "none";
+				
+				// hehehe
+				document.body.appendChild(frame.frame);
+				
+				// lol
+				frame.go(url.toString());
+				
+			} catch (err) {
+				showError("Error initializing proxy: " + err.toString());
+				console.error(err);
+			}
+		}
+		
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", initProxy);
+		} else {
+			initProxy();
+		}
+	</script>
+</body>
+
+</html>
