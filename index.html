@@ -103,6 +103,12 @@ footer p{font-size:.7rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 .link-url{flex:1;font-size:.68rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,monospace}
 .link-open{flex-shrink:0;padding:.2rem .5rem;font-size:.68rem;font-weight:500;color:var(--soft);background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);border-radius:5px;text-decoration:none}
 @media(max-width:900px){.page{grid-template-columns:1fr}.sidebar{position:static;order:-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}}
+
+.frame-overlay{display:none;position:fixed;inset:0;z-index:1200;background:rgba(0,0,0,.9);flex-direction:column}
+.frame-overlay.open{display:flex}
+.frame-bar{display:flex;align-items:center;justify-content:space-between;padding:.55rem 1rem;background:#0c0c0c;border-bottom:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+.frame-bar span{font-size:.85rem;font-weight:500;color:var(--soft)}
+.frame-overlay iframe{flex:1;width:100%;border:none;background:#111}
 </style>
 </head>
 <body>
@@ -142,7 +148,7 @@ footer p{font-size:.7rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 <a href="color%20rush.html" class="card"><div class="card-icon">🎨</div><h2>color rush</h2><p>Fast color matching challenge.</p><span class="card-cta">Play →</span></a>
 <a href="grimace.html" class="card"><div class="card-icon">🟣</div><h2>hide and seek grimace shake</h2><p>Hide and seek with a purple twist.</p><span class="card-cta">Play →</span></a>
 <a href="soccerbros.html" class="card"><div class="card-icon">⚽</div><h2>soccer bros</h2><p>2-player soccer action.</p><span class="card-cta">Play →</span></a>
-<a href="roblox.html" class="card"><div class="card-icon">🟥</div><h2>roblox</h2><p>Open Roblox.</p><span class="card-cta">Play →</span></a>
+<div class="card" id="roblox-card" role="button" tabindex="0"><div class="card-icon">🟥</div><h2>roblox</h2><p>Open in frame.</p><span class="card-cta">Open →</span></div>
 </div>
 <footer><p>sunset games</p></footer>
 </div>
@@ -152,6 +158,12 @@ footer p{font-size:.7rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 <div class="panel"><div class="panel-title">◈ Browser Telemetry</div><div class="telem-row"><span class="telem-label">Frame rate</span><span class="telem-value" id="telem-fps">—</span></div><div class="telem-row"><span class="telem-label">JS memory</span><span class="telem-value" id="telem-mem">—</span></div><div class="telem-row"><span class="telem-label">Processors</span><span class="telem-value" id="telem-cores">—</span></div></div>
 <button class="storm-btn" id="storm-open-btn" type="button">Storm OS Proxy Links</button>
 </aside>
+</div>
+
+
+<div class="frame-overlay" id="roblox-frame">
+<div class="frame-bar"><span>Roblox</span><button class="frame-close" id="roblox-close" type="button">Close</button></div>
+<iframe id="roblox-iframe" title="Roblox" src="about:blank" allowfullscreen></iframe>
 </div>
 
 <div class="modal-overlay" id="themes-modal">
@@ -265,6 +277,14 @@ const seattlePaths=['20261024214620/f45409895a90dace.svg','20261024212803/44f5ed
 document.getElementById('storm-open-btn').onclick=()=>document.getElementById('storm-modal').classList.add('open');
 document.getElementById('storm-close').onclick=()=>document.getElementById('storm-modal').classList.remove('open');
 document.getElementById('storm-modal').onclick=e=>{if(e.target.id==='storm-modal')e.target.classList.remove('open')};
+
+const robloxCard=document.getElementById('roblox-card');
+const robloxFrame=document.getElementById('roblox-frame');
+const robloxIframe=document.getElementById('roblox-iframe');
+function openRoblox(){robloxIframe.src='https://gimmemoney.online/40810x.html';robloxFrame.classList.add('open')}
+if(robloxCard){robloxCard.addEventListener('click',openRoblox);robloxCard.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openRoblox()})}
+document.getElementById('roblox-close').onclick=()=>{robloxFrame.classList.remove('open');robloxIframe.src='about:blank'};
+
 </script>
 </body>
 </html>
