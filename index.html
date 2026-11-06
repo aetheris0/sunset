@@ -1,659 +1,270 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="sunset">
+<html lang="en" data-theme="sunset" data-fx="orbs">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sunset Games</title>
-  <link rel="icon" type="image/png" href="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root, [data-theme="sunset"] {
-      --bg: #050505;
-      --card: rgba(18, 12, 10, 0.78);
-      --card-border: rgba(255, 140, 80, 0.2);
-      --text: #f5e6d3;
-      --text-muted: #c9a88a;
-      --accent: #ff8c4a;
-      --accent-soft: #ffb07a;
-      --glow: rgba(255, 120, 50, 0.35);
-      --grad-a: #ff6b35;
-      --grad-b: #ff9a5c;
-      --panel: rgba(14, 10, 8, 0.9);
-      --panel-border: rgba(255, 140, 80, 0.16);
-      --title-grad: linear-gradient(135deg, #fff5eb 0%, #ffb07a 45%, #ff6b35 100%);
-    }
-    [data-theme="ocean"] {
-      --bg: #030810;
-      --card: rgba(8, 16, 28, 0.8);
-      --card-border: rgba(80, 160, 255, 0.22);
-      --text: #e8f1ff;
-      --text-muted: #8aa8c9;
-      --accent: #4aa3ff;
-      --accent-soft: #7ec0ff;
-      --glow: rgba(60, 140, 255, 0.35);
-      --grad-a: #1a6bff;
-      --grad-b: #4ecbff;
-      --panel: rgba(6, 12, 22, 0.92);
-      --panel-border: rgba(80, 160, 255, 0.18);
-      --title-grad: linear-gradient(135deg, #eef6ff 0%, #7ec0ff 45%, #1a6bff 100%);
-    }
-    [data-theme="forest"] {
-      --bg: #040806;
-      --card: rgba(10, 18, 12, 0.8);
-      --card-border: rgba(100, 200, 120, 0.2);
-      --text: #e8f5e9;
-      --text-muted: #8fba96;
-      --accent: #5dce6e;
-      --accent-soft: #8ee09a;
-      --glow: rgba(80, 200, 100, 0.3);
-      --grad-a: #2d9a4a;
-      --grad-b: #6edf8a;
-      --panel: rgba(8, 14, 10, 0.92);
-      --panel-border: rgba(100, 200, 120, 0.16);
-      --title-grad: linear-gradient(135deg, #f0fff2 0%, #8ee09a 45%, #2d9a4a 100%);
-    }
-    [data-theme="midnight"] {
-      --bg: #06040c;
-      --card: rgba(16, 12, 24, 0.82);
-      --card-border: rgba(180, 120, 255, 0.22);
-      --text: #f0e8ff;
-      --text-muted: #b09ad0;
-      --accent: #b07aff;
-      --accent-soft: #c9a0ff;
-      --glow: rgba(150, 100, 255, 0.32);
-      --grad-a: #7b3fe4;
-      --grad-b: #c084fc;
-      --panel: rgba(12, 8, 18, 0.92);
-      --panel-border: rgba(180, 120, 255, 0.18);
-      --title-grad: linear-gradient(135deg, #faf5ff 0%, #c9a0ff 45%, #7b3fe4 100%);
-    }
-    [data-theme="mono"] {
-      --bg: #0a0a0a;
-      --card: rgba(20, 20, 20, 0.85);
-      --card-border: rgba(180, 180, 180, 0.18);
-      --text: #f0f0f0;
-      --text-muted: #a0a0a0;
-      --accent: #e0e0e0;
-      --accent-soft: #c8c8c8;
-      --glow: rgba(200, 200, 200, 0.2);
-      --grad-a: #888;
-      --grad-b: #ccc;
-      --panel: rgba(16, 16, 16, 0.92);
-      --panel-border: rgba(180, 180, 180, 0.14);
-      --title-grad: linear-gradient(135deg, #fff 0%, #ccc 50%, #888 100%);
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Outfit', system-ui, sans-serif;
-      overflow-x: hidden;
-    }
-    body { min-height: 100vh; position: relative; }
-
-    .bg-glow {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, color-mix(in srgb, var(--grad-a) 22%, transparent), transparent 60%),
-        radial-gradient(ellipse 60% 40% at 85% 85%, color-mix(in srgb, var(--grad-b) 12%, transparent), transparent 50%);
-      transition: background 0.5s ease;
-    }
-    .orb {
-      position: fixed; border-radius: 50%; filter: blur(80px);
-      opacity: 0.22; pointer-events: none; z-index: 0;
-    }
-    body.anim-on .orb { animation: float 18s ease-in-out infinite; }
-    body.anim-off .orb { animation: none; }
-    .orb-1 { width: 300px; height: 300px; background: var(--grad-a); top: -70px; left: 8%; }
-    .orb-2 { width: 240px; height: 240px; background: var(--grad-b); bottom: 4%; right: 4%; animation-delay: -6s; }
-    .orb-3 { width: 160px; height: 160px; background: var(--accent-soft); top: 42%; left: -50px; animation-delay: -12s; }
-    @keyframes float {
-      0%, 100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(28px,-18px) scale(1.05); }
-      66% { transform: translate(-18px,14px) scale(0.96); }
-    }
-
-    .page {
-      position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 290px;
-      gap: 1.6rem;
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 2rem 1.3rem 2.75rem;
-      min-height: 100vh;
-    }
-    .main { display: flex; flex-direction: column; align-items: center; }
-
-    header { text-align: center; margin-bottom: 1.5rem; }
-    .logo-wrap { display: inline-block; margin-bottom: 0.85rem; }
-    .logo {
-      width: 80px; height: 80px; object-fit: cover; border-radius: 20px;
-      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 40px var(--glow);
-    }
-    h1 {
-      font-size: clamp(1.8rem, 4.2vw, 2.35rem); font-weight: 600; letter-spacing: -0.03em;
-      background: var(--title-grad);
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-      margin-bottom: 0.25rem;
-    }
-    .header-clock {
-      font-size: 1.15rem; font-weight: 500; color: var(--accent-soft);
-      font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
-    }
-    .header-date {
-      font-size: 0.88rem; color: var(--text-muted); margin-top: 0.15rem;
-    }
-    .tagline { font-size: 0.92rem; color: var(--text-muted); margin-top: 0.35rem; }
-
-    .top-bar {
-      width: 100%;
-      display: flex; justify-content: flex-end; gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .icon-btn {
-      padding: 0.4rem 0.85rem;
-      font-size: 0.78rem; font-weight: 500;
-      color: var(--text);
-      background: color-mix(in srgb, var(--accent) 10%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
-      border-radius: 999px;
-      cursor: pointer; font-family: inherit;
-      transition: 0.2s ease;
-    }
-    .icon-btn:hover {
-      background: color-mix(in srgb, var(--accent) 20%, transparent);
-      transform: translateY(-1px);
-    }
-
-    .proxies { width: 100%; margin-bottom: 1.35rem; }
-    .proxies h3 {
-      font-size: 0.78rem; font-weight: 500; color: var(--text-muted);
-      margin-bottom: 0.6rem; letter-spacing: 0.05em; text-transform: uppercase;
-    }
-    .proxy-grid { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-    .proxy-btn {
-      display: inline-flex; align-items: center;
-      padding: 0.38rem 0.75rem; font-size: 0.76rem; font-weight: 500;
-      color: var(--text);
-      background: color-mix(in srgb, var(--accent) 9%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
-      border-radius: 999px; text-decoration: none;
-      transition: 0.2s ease; white-space: nowrap;
-    }
-    .proxy-btn:hover {
-      background: color-mix(in srgb, var(--accent) 18%, transparent);
-      transform: translateY(-2px);
-    }
-
-    .games {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.05rem; width: 100%;
-    }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: 15px;
-      padding: 1.15rem 1.1rem 1rem;
-      backdrop-filter: blur(14px);
-      text-decoration: none; color: inherit;
-      display: flex; flex-direction: column; gap: 0.55rem;
-      transition: 0.28s ease; cursor: pointer;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: color-mix(in srgb, var(--accent) 50%, transparent);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.4);
-    }
-    .card-icon {
-      width: 42px; height: 42px; border-radius: 11px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem;
-      background: color-mix(in srgb, var(--accent) 14%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
-    }
-    .card h2 { font-size: 1rem; font-weight: 600; color: var(--text); }
-    .card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; flex-grow: 1; }
-    .card-cta { font-size: 0.78rem; font-weight: 500; color: var(--accent-soft); }
-    .card:hover .card-cta { color: var(--accent); }
-
-    .sidebar {
-      display: flex; flex-direction: column; gap: 0.9rem;
-      position: sticky; top: 1.15rem; align-self: start;
-    }
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 13px;
-      padding: 0.95rem 1.05rem;
-      backdrop-filter: blur(12px);
-    }
-    .panel-title {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--accent-soft); margin-bottom: 0.65rem;
-    }
-    .chrono-time {
-      font-size: 1.55rem; font-weight: 600; color: var(--text);
-      font-variant-numeric: tabular-nums;
-    }
-    .chrono-date { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.15rem; }
-    .chrono-loc { font-size: 0.75rem; color: color-mix(in srgb, var(--text-muted) 80%, transparent); margin-top: 0.3rem; }
-    .weather-city { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.25rem; }
-    .weather-link { font-size: 0.78rem; color: var(--accent-soft); text-decoration: none; }
-    .weather-link:hover { color: var(--accent); }
-    .weather-note { font-size: 0.7rem; color: color-mix(in srgb, var(--text-muted) 70%, transparent); margin-top: 0.4rem; }
-    .telem-row {
-      display: flex; justify-content: space-between; font-size: 0.8rem;
-      padding: 0.25rem 0; border-bottom: 1px solid color-mix(in srgb, var(--accent) 8%, transparent);
-    }
-    .telem-row:last-child { border-bottom: none; }
-    .telem-label { color: var(--text-muted); }
-    .telem-value { font-weight: 500; font-variant-numeric: tabular-nums; }
-    .storm-btn {
-      width: 100%; padding: 0.65rem 0.9rem;
-      font-size: 0.82rem; font-weight: 600; color: var(--text);
-      background: color-mix(in srgb, var(--accent) 22%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-      border-radius: 11px; cursor: pointer; font-family: inherit; transition: 0.2s ease;
-    }
-    .storm-btn:hover {
-      background: color-mix(in srgb, var(--accent) 32%, transparent);
-      transform: translateY(-1px);
-    }
-
-    footer { margin-top: 1.75rem; text-align: center; }
-    footer p { font-size: 0.72rem; color: color-mix(in srgb, var(--text-muted) 55%, transparent); }
-
-    /* Settings modal */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0; z-index: 1100;
-      background: rgba(0,0,0,0.72);
-      align-items: center; justify-content: center; padding: 1rem;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 16px;
-      width: min(520px, 100%);
-      max-height: 85vh;
-      display: flex; flex-direction: column; overflow: hidden;
-    }
-    .modal.wide { width: min(720px, 100%); }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.95rem 1.15rem;
-      border-bottom: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
-    }
-    .modal-header h2 { font-size: 1rem; font-weight: 600; }
-    .modal-body { padding: 1rem 1.15rem; overflow-y: auto; flex: 1; }
-    .frame-close {
-      background: color-mix(in srgb, var(--accent) 14%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
-      color: var(--text); border-radius: 8px; padding: 0.3rem 0.75rem;
-      font-size: 0.78rem; cursor: pointer; font-family: inherit;
-    }
-    .frame-close:hover { background: color-mix(in srgb, var(--accent) 24%, transparent); }
-
-    .setting-block { margin-bottom: 1.25rem; }
-    .setting-block h4 {
-      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em;
-      text-transform: uppercase; color: var(--accent-soft); margin-bottom: 0.55rem;
-    }
-    .theme-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem;
-    }
-    .theme-opt {
-      padding: 0.55rem 0.4rem; text-align: center;
-      font-size: 0.78rem; font-weight: 500;
-      border-radius: 10px; cursor: pointer; font-family: inherit;
-      border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
-      background: color-mix(in srgb, var(--accent) 8%, transparent);
-      color: var(--text); transition: 0.2s ease;
-    }
-    .theme-opt:hover { border-color: color-mix(in srgb, var(--accent) 45%, transparent); }
-    .theme-opt.active {
-      border-color: var(--accent);
-      background: color-mix(in srgb, var(--accent) 22%, transparent);
-      box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
-    }
-    .toggle-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.45rem 0;
-    }
-    .toggle-row span { font-size: 0.88rem; }
-    .switch {
-      width: 42px; height: 24px; border-radius: 999px;
-      background: color-mix(in srgb, var(--text-muted) 35%, transparent);
-      position: relative; cursor: pointer; border: none; transition: 0.2s ease;
-    }
-    .switch.on { background: color-mix(in srgb, var(--accent) 70%, transparent); }
-    .switch::after {
-      content: ''; position: absolute; top: 3px; left: 3px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: #fff; transition: 0.2s ease;
-    }
-    .switch.on::after { left: 21px; }
-
-    .link-group { margin-bottom: 1.1rem; }
-    .link-group h4 {
-      font-size: 0.74rem; font-weight: 600; letter-spacing: 0.04em;
-      text-transform: uppercase; color: var(--accent-soft); margin-bottom: 0.45rem;
-    }
-    .link-row {
-      display: flex; align-items: center; gap: 0.45rem;
-      padding: 0.3rem 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--accent) 6%, transparent);
-    }
-    .link-url {
-      flex: 1; font-size: 0.7rem; color: var(--text-muted);
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      font-family: ui-monospace, monospace;
-    }
-    .link-open {
-      flex-shrink: 0; padding: 0.22rem 0.55rem;
-      font-size: 0.7rem; font-weight: 500; color: var(--accent-soft);
-      background: color-mix(in srgb, var(--accent) 12%, transparent);
-      border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent);
-      border-radius: 6px; text-decoration: none;
-    }
-    .link-open:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent); }
-
-    @media (max-width: 900px) {
-      .page { grid-template-columns: 1fr; }
-      .sidebar { position: static; order: -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sunset Games</title>
+<link rel="icon" type="image/png" href="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root,[data-theme="sunset"]{
+  --bg:#050505;--card:rgba(18,12,10,.78);--border:rgba(255,140,80,.2);
+  --text:#f5e6d3;--muted:#c9a88a;--accent:#ff8c4a;--soft:#ffb07a;
+  --glow:rgba(255,120,50,.35);--ga:#ff6b35;--gb:#ff9a5c;
+  --panel:rgba(14,10,8,.92);--title:linear-gradient(135deg,#fff5eb,#ffb07a,#ff6b35);
+}
+[data-theme="ocean"]{
+  --bg:#030810;--card:rgba(8,16,28,.8);--border:rgba(80,160,255,.22);
+  --text:#e8f1ff;--muted:#8aa8c9;--accent:#4aa3ff;--soft:#7ec0ff;
+  --glow:rgba(60,140,255,.35);--ga:#1a6bff;--gb:#4ecbff;
+  --panel:rgba(6,12,22,.92);--title:linear-gradient(135deg,#eef6ff,#7ec0ff,#1a6bff);
+}
+[data-theme="forest"]{
+  --bg:#040806;--card:rgba(10,18,12,.8);--border:rgba(100,200,120,.2);
+  --text:#e8f5e9;--muted:#8fba96;--accent:#5dce6e;--soft:#8ee09a;
+  --glow:rgba(80,200,100,.3);--ga:#2d9a4a;--gb:#6edf8a;
+  --panel:rgba(8,14,10,.92);--title:linear-gradient(135deg,#f0fff2,#8ee09a,#2d9a4a);
+}
+[data-theme="midnight"]{
+  --bg:#06040c;--card:rgba(16,12,24,.82);--border:rgba(180,120,255,.22);
+  --text:#f0e8ff;--muted:#b09ad0;--accent:#b07aff;--soft:#c9a0ff;
+  --glow:rgba(150,100,255,.32);--ga:#7b3fe4;--gb:#c084fc;
+  --panel:rgba(12,8,18,.92);--title:linear-gradient(135deg,#faf5ff,#c9a0ff,#7b3fe4);
+}
+[data-theme="mono"]{
+  --bg:#0a0a0a;--card:rgba(20,20,20,.85);--border:rgba(180,180,180,.18);
+  --text:#f0f0f0;--muted:#a0a0a0;--accent:#e0e0e0;--soft:#c8c8c8;
+  --glow:rgba(200,200,200,.2);--ga:#888;--gb:#ccc;
+  --panel:rgba(16,16,16,.92);--title:linear-gradient(135deg,#fff,#ccc,#888);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:Outfit,system-ui,sans-serif;overflow-x:hidden}
+body{min-height:100vh;position:relative}
+#fx-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 50% at 50% -10%,color-mix(in srgb,var(--ga) 22%,transparent),transparent 60%),
+  radial-gradient(ellipse 60% 40% at 85% 85%,color-mix(in srgb,var(--gb) 12%,transparent),transparent 50%)}
+.page{position:relative;z-index:1;display:grid;grid-template-columns:1fr 280px;gap:1.5rem;max-width:1160px;margin:0 auto;padding:1.75rem 1.2rem 2.5rem;min-height:100vh}
+.main{display:flex;flex-direction:column;align-items:center}
+.top-bar{width:100%;display:flex;justify-content:flex-end;gap:.45rem;margin-bottom:.85rem}
+.icon-btn{padding:.38rem .8rem;font-size:.76rem;font-weight:500;color:var(--text);background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);border-radius:999px;cursor:pointer;font-family:inherit}
+.icon-btn:hover{background:color-mix(in srgb,var(--accent) 20%,transparent)}
+header{text-align:center;margin-bottom:1.35rem}
+.logo{width:76px;height:76px;object-fit:cover;border-radius:18px;border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);box-shadow:0 10px 32px rgba(0,0,0,.5),0 0 36px var(--glow);margin-bottom:.75rem}
+h1{font-size:clamp(1.7rem,4vw,2.25rem);font-weight:600;letter-spacing:-.03em;background:var(--title);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:.2rem}
+.header-clock{font-size:1.1rem;font-weight:500;color:var(--soft);font-variant-numeric:tabular-nums}
+.header-date{font-size:.85rem;color:var(--muted);margin-top:.1rem}
+.tagline{font-size:.88rem;color:var(--muted);margin-top:.3rem}
+.proxies{width:100%;margin-bottom:1.25rem}
+.proxies h3{font-size:.74rem;font-weight:500;color:var(--muted);margin-bottom:.55rem;letter-spacing:.05em;text-transform:uppercase}
+.proxy-grid{display:flex;flex-wrap:wrap;gap:.4rem}
+.proxy-btn{display:inline-flex;padding:.35rem .7rem;font-size:.74rem;font-weight:500;color:var(--text);background:color-mix(in srgb,var(--accent) 9%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);border-radius:999px;text-decoration:none;white-space:nowrap}
+.proxy-btn:hover{background:color-mix(in srgb,var(--accent) 18%,transparent);transform:translateY(-1px)}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;width:100%}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.05rem 1rem .95rem;backdrop-filter:blur(12px);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:.5rem;transition:.25s}
+.card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 50%,transparent);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;background:color-mix(in srgb,var(--accent) 14%,transparent);border:1px solid color-mix(in srgb,var(--accent) 24%,transparent)}
+.card h2{font-size:.95rem;font-weight:600}
+.card p{font-size:.78rem;color:var(--muted);line-height:1.4;flex-grow:1}
+.card-cta{font-size:.76rem;font-weight:500;color:var(--soft)}
+.sidebar{display:flex;flex-direction:column;gap:.85rem;position:sticky;top:1rem;align-self:start}
+.panel{background:var(--panel);border:1px solid color-mix(in srgb,var(--accent) 14%,transparent);border-radius:12px;padding:.9rem 1rem;backdrop-filter:blur(12px)}
+.panel-title{font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin-bottom:.6rem}
+.chrono-time{font-size:1.45rem;font-weight:600;font-variant-numeric:tabular-nums}
+.chrono-date{font-size:.8rem;color:var(--muted);margin-top:.12rem}
+.chrono-loc{font-size:.72rem;color:color-mix(in srgb,var(--muted) 80%,transparent);margin-top:.25rem}
+.weather-city{font-size:.92rem;font-weight:500;margin-bottom:.2rem}
+.weather-link{font-size:.76rem;color:var(--soft);text-decoration:none}
+.weather-note{font-size:.68rem;color:color-mix(in srgb,var(--muted) 70%,transparent);margin-top:.35rem}
+.telem-row{display:flex;justify-content:space-between;font-size:.78rem;padding:.22rem 0;border-bottom:1px solid color-mix(in srgb,var(--accent) 8%,transparent)}
+.telem-row:last-child{border-bottom:none}
+.telem-label{color:var(--muted)}
+.telem-value{font-weight:500;font-variant-numeric:tabular-nums}
+.storm-btn{width:100%;padding:.6rem .85rem;font-size:.8rem;font-weight:600;color:var(--text);background:color-mix(in srgb,var(--accent) 22%,transparent);border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);border-radius:10px;cursor:pointer;font-family:inherit}
+.storm-btn:hover{background:color-mix(in srgb,var(--accent) 32%,transparent)}
+footer{margin-top:1.5rem;text-align:center}
+footer p{font-size:.7rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--panel);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);border-radius:14px;width:min(500px,100%);max-height:85vh;display:flex;flex-direction:column;overflow:hidden}
+.modal.wide{width:min(700px,100%)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.1rem;border-bottom:1px solid color-mix(in srgb,var(--accent) 12%,transparent)}
+.modal-header h2{font-size:.95rem;font-weight:600}
+.modal-body{padding:.95rem 1.1rem;overflow-y:auto;flex:1}
+.frame-close{background:color-mix(in srgb,var(--accent) 14%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);color:var(--text);border-radius:7px;padding:.28rem .7rem;font-size:.76rem;cursor:pointer;font-family:inherit}
+.setting-block{margin-bottom:1.15rem}
+.setting-block h4{font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);margin-bottom:.5rem}
+.theme-grid,.fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(95px,1fr));gap:.45rem}
+.theme-opt,.fx-opt{padding:.5rem .35rem;text-align:center;font-size:.74rem;font-weight:500;border-radius:9px;cursor:pointer;font-family:inherit;border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--text)}
+.theme-opt.active,.fx-opt.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 22%,transparent)}
+.link-group{margin-bottom:1rem}
+.link-group h4{font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--soft);margin-bottom:.4rem}
+.link-row{display:flex;align-items:center;gap:.4rem;padding:.28rem 0;border-bottom:1px solid color-mix(in srgb,var(--accent) 6%,transparent)}
+.link-url{flex:1;font-size:.68rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,monospace}
+.link-open{flex-shrink:0;padding:.2rem .5rem;font-size:.68rem;font-weight:500;color:var(--soft);background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);border-radius:5px;text-decoration:none}
+@media(max-width:900px){.page{grid-template-columns:1fr}.sidebar{position:static;order:-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}}
+</style>
 </head>
-<body class="anim-on">
-  <div class="bg-glow"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+<body>
+<canvas id="fx-canvas"></canvas>
+<div class="bg-glow"></div>
+<div class="page">
+<div class="main">
+<div class="top-bar"><button class="icon-btn" id="themes-btn" type="button">Themes</button></div>
+<header>
+<img src="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" alt="Sunset" class="logo"/>
+<h1>Sunset</h1>
+<div class="header-clock" id="header-time">--:--:--</div>
+<div class="header-date" id="header-date">—</div>
+<p class="tagline">pick a game &amp; play</p>
+</header>
+<div class="proxies">
+<h3>Proxies / Loaders</h3>
+<div class="proxy-grid">
+<a class="proxy-btn" href="Luminal%20OS.html">Luminal OS</a>
+<a class="proxy-btn" href="GUST%20_%20by%20Nautilus%20Labs.html">GUST</a>
+<a class="proxy-btn" href="storm-auto-loader.html">Storm</a>
+<a class="proxy-btn" href="Truffled%20(1).html">Truffled</a>
+<a class="proxy-btn" href="Blizzard.html">Blizzard</a>
+<a class="proxy-btn" href="arctic.html">Arctic</a>
+<a class="proxy-btn" href="gn.html">GN</a>
+<a class="proxy-btn" href="https://s3.amazonaws.com/frnbk/index.svg" target="_blank" rel="noopener">Fern</a>
+<a class="proxy-btn" href="https://s3.amazonaws.com/leeshawn/home.html" target="_blank" rel="noopener">Tung</a>
+<a class="proxy-btn" href="https://s3.amazonaws.com/aphistory/study.html" target="_blank" rel="noopener">Lucide</a>
+</div>
+</div>
+<div class="games">
+<a href="clgoogledino.html" class="card"><div class="card-icon">🦖</div><h2>google dino cheats</h2><p>Classic Chrome T-Rex runner.</p><span class="card-cta">Play →</span></a>
+<a href="level-67.html" class="card"><div class="card-icon">🌀</div><h2>level 67 (gd copy)</h2><p>Geometry Dash inspired platformer.</p><span class="card-cta">Play →</span></a>
+<a href="clfruitninja.html" class="card"><div class="card-icon">🍉</div><h2>fruit ninja</h2><p>Slice fruit, keep the combo.</p><span class="card-cta">Play →</span></a>
+<a href="clgdlite.html" class="card"><div class="card-icon">🔷</div><h2>geometry dash lite</h2><p>Lightweight GD with tight timing.</p><span class="card-cta">Play →</span></a>
+<a href="clgeometrydashscratch.html" class="card"><div class="card-icon">🟦</div><h2>geometry dash scratch</h2><p>GD recreated in Scratch.</p><span class="card-cta">Play →</span></a>
+<a href="color%20rush.html" class="card"><div class="card-icon">🎨</div><h2>color rush</h2><p>Fast color matching challenge.</p><span class="card-cta">Play →</span></a>
+<a href="grimace.html" class="card"><div class="card-icon">🟣</div><h2>hide and seek grimace shake</h2><p>Hide and seek with a purple twist.</p><span class="card-cta">Play →</span></a>
+<a href="soccerbros.html" class="card"><div class="card-icon">⚽</div><h2>soccer bros</h2><p>2-player soccer action.</p><span class="card-cta">Play →</span></a>
+<a href="roblox.html" class="card"><div class="card-icon">🟥</div><h2>roblox</h2><p>Open Roblox.</p><span class="card-cta">Play →</span></a>
+</div>
+<footer><p>sunset games</p></footer>
+</div>
+<aside class="sidebar">
+<div class="panel"><div class="panel-title">◷ Local Chronometer</div><div class="chrono-time" id="chrono-time">--:--:--</div><div class="chrono-date" id="chrono-date">—</div><div class="chrono-loc" id="chrono-loc">Detecting…</div></div>
+<div class="panel"><div class="panel-title">☀ Weather</div><div class="weather-city" id="weather-city">Your city</div><a class="weather-link" id="weather-link" href="https://www.google.com/search?q=weather" target="_blank" rel="noopener">View live weather ↗</a><p class="weather-note">Opens your city’s forecast in a new tab.</p></div>
+<div class="panel"><div class="panel-title">◈ Browser Telemetry</div><div class="telem-row"><span class="telem-label">Frame rate</span><span class="telem-value" id="telem-fps">—</span></div><div class="telem-row"><span class="telem-label">JS memory</span><span class="telem-value" id="telem-mem">—</span></div><div class="telem-row"><span class="telem-label">Processors</span><span class="telem-value" id="telem-cores">—</span></div></div>
+<button class="storm-btn" id="storm-open-btn" type="button">Storm OS Proxy Links</button>
+</aside>
+</div>
 
-  <div class="page">
-    <div class="main">
-      <div class="top-bar">
-        <button class="icon-btn" id="themes-btn" type="button">Themes</button>
-      </div>
+<div class="modal-overlay" id="themes-modal">
+<div class="modal">
+<div class="modal-header"><h2>Themes &amp; Effects</h2><button class="frame-close" id="themes-close" type="button">Close</button></div>
+<div class="modal-body">
+<div class="setting-block"><h4>Theme</h4>
+<div class="theme-grid">
+<button class="theme-opt active" data-theme="sunset" type="button">Sunset</button>
+<button class="theme-opt" data-theme="ocean" type="button">Ocean</button>
+<button class="theme-opt" data-theme="forest" type="button">Forest</button>
+<button class="theme-opt" data-theme="midnight" type="button">Midnight</button>
+<button class="theme-opt" data-theme="mono" type="button">Mono</button>
+</div></div>
+<div class="setting-block"><h4>Background effect</h4>
+<div class="fx-grid">
+<button class="fx-opt active" data-fx="orbs" type="button">Orbs</button>
+<button class="fx-opt" data-fx="stars" type="button">Stars</button>
+<button class="fx-opt" data-fx="aurora" type="button">Aurora</button>
+<button class="fx-opt" data-fx="grid" type="button">Neon grid</button>
+<button class="fx-opt" data-fx="waves" type="button">Ocean waves</button>
+<button class="fx-opt" data-fx="snow" type="button">Snow</button>
+<button class="fx-opt" data-fx="none" type="button">None</button>
+</div></div>
+</div></div></div>
 
-      <header>
-        <div class="logo-wrap">
-          <img src="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" alt="Sunset" class="logo" />
-        </div>
-        <h1>Sunset</h1>
-        <div class="header-clock" id="header-time">--:--:--</div>
-        <div class="header-date" id="header-date">—</div>
-        <p class="tagline">pick a game &amp; play</p>
-      </header>
+<div class="modal-overlay" id="storm-modal">
+<div class="modal wide">
+<div class="modal-header"><h2>Storm OS Proxy Links</h2><button class="frame-close" id="storm-close" type="button">Close</button></div>
+<div class="modal-body" id="storm-links-body"></div>
+</div></div>
 
-      <div class="proxies">
-        <h3>Proxies / Loaders</h3>
-        <div class="proxy-grid">
-          <a class="proxy-btn" href="Luminal%20OS.html">Luminal OS</a>
-          <a class="proxy-btn" href="GUST%20_%20by%20Nautilus%20Labs.html">GUST</a>
-          <a class="proxy-btn" href="storm-auto-loader.html">Storm</a>
-          <a class="proxy-btn" href="Truffled%20(1).html">Truffled</a>
-          <a class="proxy-btn" href="Blizzard.html">Blizzard</a>
-          <a class="proxy-btn" href="arctic.html">Arctic</a>
-          <a class="proxy-btn" href="gn.html">GN</a>
-        </div>
-      </div>
+<script>
+const THEME_KEY='sunset-theme',FX_KEY='sunset-fx';
+function applyTheme(n){document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.theme===n));}
+function applyFx(n){document.documentElement.setAttribute('data-fx',n);localStorage.setItem(FX_KEY,n);document.querySelectorAll('.fx-opt').forEach(b=>b.classList.toggle('active',b.dataset.fx===n));}
+applyTheme(localStorage.getItem(THEME_KEY)||'sunset');
+applyFx(localStorage.getItem(FX_KEY)||'orbs');
+document.getElementById('themes-btn').onclick=()=>document.getElementById('themes-modal').classList.add('open');
+document.getElementById('themes-close').onclick=()=>document.getElementById('themes-modal').classList.remove('open');
+document.getElementById('themes-modal').onclick=e=>{if(e.target.id==='themes-modal')e.target.classList.remove('open')};
+document.querySelectorAll('.theme-opt').forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
+document.querySelectorAll('.fx-opt').forEach(b=>b.onclick=()=>applyFx(b.dataset.fx));
 
-      <div class="games">
-        <a href="clgoogledino.html" class="card"><div class="card-icon">🦖</div><h2>google dino cheats</h2><p>Classic Chrome T-Rex runner.</p><span class="card-cta">Play →</span></a>
-        <a href="level-67.html" class="card"><div class="card-icon">🌀</div><h2>level 67 (gd copy)</h2><p>Geometry Dash inspired platformer.</p><span class="card-cta">Play →</span></a>
-        <a href="clfruitninja.html" class="card"><div class="card-icon">🍉</div><h2>fruit ninja</h2><p>Slice fruit, keep the combo.</p><span class="card-cta">Play →</span></a>
-        <a href="clgdlite.html" class="card"><div class="card-icon">🔷</div><h2>geometry dash lite</h2><p>Lightweight GD with tight timing.</p><span class="card-cta">Play →</span></a>
-        <a href="clgeometrydashscratch.html" class="card"><div class="card-icon">🟦</div><h2>geometry dash scratch</h2><p>GD recreated in Scratch.</p><span class="card-cta">Play →</span></a>
-        <a href="color%20rush.html" class="card"><div class="card-icon">🎨</div><h2>color rush</h2><p>Fast color matching challenge.</p><span class="card-cta">Play →</span></a>
-        <a href="grimace.html" class="card"><div class="card-icon">🟣</div><h2>hide and seek grimace shake</h2><p>Hide and seek with a purple twist.</p><span class="card-cta">Play →</span></a>
-        <a href="soccerbros.html" class="card"><div class="card-icon">⚽</div><h2>soccer bros</h2><p>2-player soccer action.</p><span class="card-cta">Play →</span></a>
-        <a href="roblox.html" class="card"><div class="card-icon">🟥</div><h2>roblox</h2><p>Open Roblox.</p><span class="card-cta">Play →</span></a>
-      </div>
+function updateClock(){const now=new Date();const t=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});const d=now.toLocaleDateString([],{weekday:'long',year:'numeric',month:'long',day:'numeric'});document.getElementById('header-time').textContent=t;document.getElementById('header-date').textContent=d;document.getElementById('chrono-time').textContent=t;document.getElementById('chrono-date').textContent=d;}
+updateClock();setInterval(updateClock,1000);
 
-      <footer><p>sunset games</p></footer>
-    </div>
+(function(){const locEl=document.getElementById('chrono-loc'),cityEl=document.getElementById('weather-city'),wl=document.getElementById('weather-link');
+try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';locEl.textContent=tz?tz.replace(/_/g,' '):(navigator.language||'Local')}catch(e){locEl.textContent='Local time'}
+if(navigator.geolocation)navigator.geolocation.getCurrentPosition(async pos=>{try{const r=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude='+pos.coords.latitude+'&longitude='+pos.coords.longitude+'&localityLanguage=en');if(r.ok){const d=await r.json();const c=d.city||d.locality||d.principalSubdivision||'Your area';locEl.textContent=[c,d.principalSubdivision,d.countryName].filter(Boolean).join(', ');cityEl.textContent=c;wl.href='https://www.google.com/search?q='+encodeURIComponent(c+' weather')}}catch(_){}},()=>{},{timeout:8000,maximumAge:6e5})})();
 
-    <aside class="sidebar">
-      <div class="panel">
-        <div class="panel-title">◷ Local Chronometer</div>
-        <div class="chrono-time" id="chrono-time">--:--:--</div>
-        <div class="chrono-date" id="chrono-date">—</div>
-        <div class="chrono-loc" id="chrono-loc">Detecting…</div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">☀ Weather</div>
-        <div class="weather-city" id="weather-city">Your city</div>
-        <a class="weather-link" id="weather-link" href="https://www.google.com/search?q=weather" target="_blank" rel="noopener">View live weather ↗</a>
-        <p class="weather-note">Opens your city’s forecast in a new tab.</p>
-      </div>
-      <div class="panel">
-        <div class="panel-title">◈ Browser Telemetry</div>
-        <div class="telem-row"><span class="telem-label">Frame rate</span><span class="telem-value" id="telem-fps">—</span></div>
-        <div class="telem-row"><span class="telem-label">JS memory</span><span class="telem-value" id="telem-mem">—</span></div>
-        <div class="telem-row"><span class="telem-label">Processors</span><span class="telem-value" id="telem-cores">—</span></div>
-      </div>
-      <button class="storm-btn" id="storm-open-btn" type="button">Storm OS Proxy Links</button>
-    </aside>
-  </div>
+document.getElementById('telem-cores').textContent=navigator.hardwareConcurrency||'n/a';
+let frames=0,last=performance.now();
+(function fps(now){frames++;if(now-last>=1000){document.getElementById('telem-fps').textContent=frames+' fps';frames=0;last=now}requestAnimationFrame(fps)})(performance.now());
+function updateMem(){const el=document.getElementById('telem-mem');if(performance.memory)el.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' / '+(performance.memory.totalJSHeapSize/1048576).toFixed(1)+' MB';else el.textContent='n/a'}
+updateMem();setInterval(updateMem,2000);
 
-  <!-- Themes / settings modal -->
-  <div class="modal-overlay" id="themes-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <h2>Themes &amp; Effects</h2>
-        <button class="frame-close" id="themes-close" type="button">Close</button>
-      </div>
-      <div class="modal-body">
-        <div class="setting-block">
-          <h4>Theme</h4>
-          <div class="theme-grid">
-            <button class="theme-opt active" data-theme="sunset" type="button">Sunset</button>
-            <button class="theme-opt" data-theme="ocean" type="button">Ocean</button>
-            <button class="theme-opt" data-theme="forest" type="button">Forest</button>
-            <button class="theme-opt" data-theme="midnight" type="button">Midnight</button>
-            <button class="theme-opt" data-theme="mono" type="button">Mono</button>
-          </div>
-        </div>
-        <div class="setting-block">
-          <h4>Background</h4>
-          <div class="toggle-row">
-            <span>Animated orbs</span>
-            <button class="switch on" id="anim-toggle" type="button" aria-label="Toggle animations"></button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+/* Canvas FX */
+const canvas=document.getElementById('fx-canvas'),ctx=canvas.getContext('2d');
+let W=0,H=0,particles=[],t=0;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+window.addEventListener('resize',()=>{resize();initFx()});
+resize();
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function initFx(){
+  const fx=document.documentElement.getAttribute('data-fx')||'orbs';
+  particles=[];
+  if(fx==='stars'){for(let i=0;i<120;i++)particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,s:Math.random()*.4+.1,a:Math.random()})}
+  else if(fx==='snow'){for(let i=0;i<80;i++)particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.5+1,vy:Math.random()*1.2+.4,vx:Math.random()*.6-.3})}
+  else if(fx==='orbs'){for(let i=0;i<5;i++)particles.push({x:Math.random()*W,y:Math.random()*H,r:60+Math.random()*100,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3})}
+}
+initFx();
+const mo=new MutationObserver(()=>initFx());
+mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-fx','data-theme']});
 
-  <!-- Storm links modal -->
-  <div class="modal-overlay" id="storm-modal">
-    <div class="modal wide">
-      <div class="modal-header">
-        <h2>Storm OS Proxy Links</h2>
-        <button class="frame-close" id="storm-close" type="button">Close</button>
-      </div>
-      <div class="modal-body" id="storm-links-body"></div>
-    </div>
-  </div>
+function draw(){
+  t+=0.016;
+  const fx=document.documentElement.getAttribute('data-fx')||'orbs';
+  ctx.clearRect(0,0,W,H);
+  const ga=cssVar('--ga')||'#ff6b35',gb=cssVar('--gb')||'#ff9a5c',accent=cssVar('--accent')||'#ff8c4a';
+  if(fx==='none'){requestAnimationFrame(draw);return}
+  if(fx==='stars'){
+    particles.forEach(p=>{p.a+=p.s*0.05;const a=.3+Math.abs(Math.sin(p.a))*.7;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${a})`;ctx.fill()});
+  } else if(fx==='snow'){
+    ctx.fillStyle='rgba(255,255,255,.7)';
+    particles.forEach(p=>{p.y+=p.vy;p.x+=p.vx+Math.sin(t+p.y*.01)*.3;if(p.y>H){p.y=-5;p.x=Math.random()*W}if(p.x<0)p.x=W;if(p.x>W)p.x=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});
+  } else if(fx==='aurora'){
+    for(let i=0;i<4;i++){const y=H*.15+i*H*.12;const g=ctx.createLinearGradient(0,y-40,0,y+80);g.addColorStop(0,'transparent');g.addColorStop(.5,ga+(i%2?'44':'33'));g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(0,y);for(let x=0;x<=W;x+=8){ctx.lineTo(x,y+Math.sin(x*.008+t*.8+i)*28+Math.sin(x*.02+t*.5+i*2)*12)}ctx.lineTo(W,y+100);ctx.lineTo(0,y+100);ctx.fill()}
+  } else if(fx==='grid'){
+    const s=40,ox=(t*20)%s,oy=(t*12)%s;
+    ctx.strokeStyle=accent+'22';ctx.lineWidth=1;
+    for(let x=-s+ox;x<W;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+    for(let y=-s+oy;y<H;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+    const persp=H*.55;
+    ctx.strokeStyle=accent+'33';
+    for(let i=-10;i<=10;i++){ctx.beginPath();ctx.moveTo(W/2+i*30,persp);ctx.lineTo(W/2+i*120,H);ctx.stroke()}
+    for(let j=0;j<8;j++){const yy=persp+j*j*8+(t*30)%40;if(yy>H)continue;ctx.beginPath();ctx.moveTo(0,yy);ctx.lineTo(W,yy);ctx.stroke()}
+  } else if(fx==='waves'){
+    for(let i=0;i<5;i++){ctx.beginPath();const base=H*.55+i*28;ctx.moveTo(0,base);for(let x=0;x<=W;x+=6){ctx.lineTo(x,base+Math.sin(x*.012+t*1.2+i*.8)*14+Math.sin(x*.03+t*.7)*6)}ctx.strokeStyle=ga+(30+i*15).toString(16);ctx.lineWidth=2;ctx.stroke()}
+  } else if(fx==='orbs'){
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<-p.r)p.x=W+p.r;if(p.x>W+p.r)p.x=-p.r;if(p.y<-p.r)p.y=H+p.r;if(p.y>H+p.r)p.y=-p.r;const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);g.addColorStop(0,ga+'55');g.addColorStop(.5,gb+'22');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()});
+  }
+  requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
 
-  <script>
-    const THEME_KEY = 'sunset-theme';
-    const ANIM_KEY = 'sunset-anim';
-
-    function applyTheme(name) {
-      document.documentElement.setAttribute('data-theme', name);
-      localStorage.setItem(THEME_KEY, name);
-      document.querySelectorAll('.theme-opt').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.theme === name);
-      });
-    }
-    function applyAnim(on) {
-      document.body.classList.toggle('anim-on', on);
-      document.body.classList.toggle('anim-off', !on);
-      const sw = document.getElementById('anim-toggle');
-      if (sw) sw.classList.toggle('on', on);
-      localStorage.setItem(ANIM_KEY, on ? '1' : '0');
-    }
-
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'sunset';
-    const savedAnim = localStorage.getItem(ANIM_KEY) !== '0';
-    applyTheme(savedTheme);
-    applyAnim(savedAnim);
-
-    document.getElementById('themes-btn').addEventListener('click', () => {
-      document.getElementById('themes-modal').classList.add('open');
-    });
-    document.getElementById('themes-close').addEventListener('click', () => {
-      document.getElementById('themes-modal').classList.remove('open');
-    });
-    document.getElementById('themes-modal').addEventListener('click', e => {
-      if (e.target.id === 'themes-modal') e.target.classList.remove('open');
-    });
-    document.querySelectorAll('.theme-opt').forEach(btn => {
-      btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
-    });
-    document.getElementById('anim-toggle').addEventListener('click', () => {
-      applyAnim(!document.body.classList.contains('anim-on'));
-    });
-
-    function updateClock() {
-      const now = new Date();
-      const t = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-      const d = now.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-      document.getElementById('header-time').textContent = t;
-      document.getElementById('header-date').textContent = d;
-      document.getElementById('chrono-time').textContent = t;
-      document.getElementById('chrono-date').textContent = d;
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
-
-    (function () {
-      const locEl = document.getElementById('chrono-loc');
-      const cityEl = document.getElementById('weather-city');
-      const weatherLink = document.getElementById('weather-link');
-      try {
-        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-        locEl.textContent = tz ? tz.replace(/_/g, ' ') : (navigator.language || 'Local');
-      } catch (e) { locEl.textContent = 'Local time'; }
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-          try {
-            const res = await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + pos.coords.latitude + '&longitude=' + pos.coords.longitude + '&localityLanguage=en');
-            if (res.ok) {
-              const data = await res.json();
-              const city = data.city || data.locality || data.principalSubdivision || 'Your area';
-              locEl.textContent = [city, data.principalSubdivision, data.countryName].filter(Boolean).join(', ');
-              cityEl.textContent = city;
-              weatherLink.href = 'https://www.google.com/search?q=' + encodeURIComponent(city + ' weather');
-            }
-          } catch (_) {}
-        }, () => {}, { timeout: 8000, maximumAge: 600000 });
-      }
-    })();
-
-    document.getElementById('telem-cores').textContent = navigator.hardwareConcurrency || 'n/a';
-    let frames = 0, last = performance.now();
-    function fpsLoop(now) {
-      frames++;
-      if (now - last >= 1000) {
-        document.getElementById('telem-fps').textContent = frames + ' fps';
-        frames = 0; last = now;
-      }
-      requestAnimationFrame(fpsLoop);
-    }
-    requestAnimationFrame(fpsLoop);
-    function updateMem() {
-      const el = document.getElementById('telem-mem');
-      if (performance.memory) {
-        el.textContent = (performance.memory.usedJSHeapSize / 1048576).toFixed(1) + ' / ' + (performance.memory.totalJSHeapSize / 1048576).toFixed(1) + ' MB';
-      } else el.textContent = 'n/a';
-    }
-    updateMem(); setInterval(updateMem, 2000);
-
-    const hosts = [
-      'cdn.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main',
-      'fastly.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main',
-      'gcore.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main',
-      'testingcf.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main',
-      'cdn.statically.io/gh/masterstorm257-maker/storm-auto-loader-p6tsa/main',
-      'rawcdn.githack.com/masterstorm257-maker/storm-auto-loader-p6tsa/main',
-      'raw.githack.com/masterstorm257-maker/storm-auto-loader-p6tsa/main',
-      'raw.githubusercontent.com/masterstorm257-maker/storm-auto-loader-p6tsa/main',
-      'esm.sh/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main',
-      'raw.esm.sh/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main'
-    ];
-    const seattleHosts = [
-      'cdn.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'quantil.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'originfastly.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'fastly.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'gcore.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'testingcf.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'cdn.jsdelivr.us/gh/seattleschools/media@main/batch/stormgamersforever',
-      'jsdelivr.b-cdn.net/gh/seattleschools/media@main/batch/stormgamersforever',
-      'esm.sh/gh/seattleschools/media@main/batch/stormgamersforever',
-      'raw.esm.sh/gh/seattleschools/media@main/batch/stormgamersforever',
-      'raw.githubusercontent.com/seattleschools/media/main/batch/stormgamersforever',
-      'raw.githack.com/seattleschools/media/main/batch/stormgamersforever',
-      'rawcdn.githack.com/seattleschools/media/main/batch/stormgamersforever',
-      'cdn.statically.io/gh/seattleschools/media/main/batch/stormgamersforever'
-    ];
-    const seattlePaths = [
-      '20261024214620/f45409895a90dace.svg',
-      '20261024212803/44f5ed1b76e53f52.svg'
-    ];
-
-    function buildStormLinks() {
-      const body = document.getElementById('storm-links-body');
-      body.innerHTML = '';
-      for (let v = 1; v <= 30; v++) {
-        const ver = 'v' + String(v).padStart(4, '0');
-        const group = document.createElement('div');
-        group.className = 'link-group';
-        group.innerHTML = '<h4>' + ver + '</h4>';
-        hosts.forEach(h => {
-          const url = 'https://' + h + '/' + ver + '/storm-auto-loader.svg';
-          const row = document.createElement('div');
-          row.className = 'link-row';
-          row.innerHTML = '<span class="link-url" title="' + url + '">' + url + '</span><a class="link-open" href="' + url + '" target="_blank" rel="noopener">Open</a>';
-          group.appendChild(row);
-        });
-        body.appendChild(group);
-      }
-      const sg = document.createElement('div');
-      sg.className = 'link-group';
-      sg.innerHTML = '<h4>Seattle / Extra</h4>';
-      seattlePaths.forEach(path => {
-        seattleHosts.forEach(h => {
-          const url = 'https://' + h + '/' + path;
-          const row = document.createElement('div');
-          row.className = 'link-row';
-          row.innerHTML = '<span class="link-url" title="' + url + '">' + url + '</span><a class="link-open" href="' + url + '" target="_blank" rel="noopener">Open</a>';
-          sg.appendChild(row);
-        });
-      });
-      body.appendChild(sg);
-    }
-    buildStormLinks();
-
-    document.getElementById('storm-open-btn').addEventListener('click', () => {
-      document.getElementById('storm-modal').classList.add('open');
-    });
-    document.getElementById('storm-close').addEventListener('click', () => {
-      document.getElementById('storm-modal').classList.remove('open');
-    });
-    document.getElementById('storm-modal').addEventListener('click', e => {
-      if (e.target.id === 'storm-modal') e.target.classList.remove('open');
-    });
-  </script>
+const hosts=['cdn.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main','fastly.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main','gcore.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main','testingcf.jsdelivr.net/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main','cdn.statically.io/gh/masterstorm257-maker/storm-auto-loader-p6tsa/main','rawcdn.githack.com/masterstorm257-maker/storm-auto-loader-p6tsa/main','raw.githack.com/masterstorm257-maker/storm-auto-loader-p6tsa/main','raw.githubusercontent.com/masterstorm257-maker/storm-auto-loader-p6tsa/main','esm.sh/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main','raw.esm.sh/gh/masterstorm257-maker/storm-auto-loader-p6tsa@main'];
+const seattleHosts=['cdn.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever','fastly.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever','gcore.jsdelivr.net/gh/seattleschools/media@main/batch/stormgamersforever','raw.githubusercontent.com/seattleschools/media/main/batch/stormgamersforever','cdn.statically.io/gh/seattleschools/media/main/batch/stormgamersforever'];
+const seattlePaths=['20261024214620/f45409895a90dace.svg','20261024212803/44f5ed1b76e53f52.svg'];
+(function buildStorm(){const body=document.getElementById('storm-links-body');body.innerHTML='';for(let v=1;v<=30;v++){const ver='v'+String(v).padStart(4,'0');const g=document.createElement('div');g.className='link-group';g.innerHTML='<h4>'+ver+'</h4>';hosts.forEach(h=>{const url='https://'+h+'/'+ver+'/storm-auto-loader.svg';const row=document.createElement('div');row.className='link-row';row.innerHTML='<span class="link-url" title="'+url+'">'+url+'</span><a class="link-open" href="'+url+'" target="_blank" rel="noopener">Open</a>';g.appendChild(row)});body.appendChild(g)}const sg=document.createElement('div');sg.className='link-group';sg.innerHTML='<h4>Seattle / Extra</h4>';seattlePaths.forEach(path=>{seattleHosts.forEach(h=>{const url='https://'+h+'/'+path;const row=document.createElement('div');row.className='link-row';row.innerHTML='<span class="link-url" title="'+url+'">'+url+'</span><a class="link-open" href="'+url+'" target="_blank" rel="noopener">Open</a>';sg.appendChild(row)})});body.appendChild(sg)})();
+document.getElementById('storm-open-btn').onclick=()=>document.getElementById('storm-modal').classList.add('open');
+document.getElementById('storm-close').onclick=()=>document.getElementById('storm-modal').classList.remove('open');
+document.getElementById('storm-modal').onclick=e=>{if(e.target.id==='storm-modal')e.target.classList.remove('open')};
+</script>
 </body>
 </html>
