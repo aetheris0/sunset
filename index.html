@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sunset High School</title>
+<title>Sunset</title>
 <link rel="icon" type="image/png" href="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -71,38 +71,44 @@ body{min-height:100vh;position:relative}
   background:radial-gradient(ellipse 80% 50% at 50% -8%,color-mix(in srgb,var(--ga) 24%,transparent),transparent 58%),
   radial-gradient(ellipse 55% 40% at 90% 90%,color-mix(in srgb,var(--gb) 12%,transparent),transparent 50%)}
 
-/* LANDING - clean school portal */
-#landing{position:fixed;inset:0;z-index:2000;overflow-y:auto;background:#f4f5f7;
-  transition:opacity .55s ease,visibility .55s;font-family:Outfit,system-ui,sans-serif}
+/* LANDING */
+#landing{position:fixed;inset:0;z-index:2000;overflow-y:auto;
+  background:#0a0605;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,120,50,.18), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(255,80,30,.08), transparent 50%);
+  transition:opacity .5s ease,visibility .5s;font-family:Outfit,system-ui,sans-serif}
 #landing.hide{opacity:0;visibility:hidden;pointer-events:none}
-.l-wrap{max-width:960px;margin:0 auto;padding:0 1.5rem 3rem}
-.l-nav{display:flex;align-items:center;justify-content:space-between;padding:1.15rem 0;border-bottom:1px solid #e4e6ea}
-.l-brand{display:flex;align-items:center;gap:.65rem;font-weight:600;font-size:1rem;color:#0f172a}
-.l-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.l-nav-right{font-size:.82rem;color:#64748b}
+.l-wrap{max-width:960px;margin:0 auto;padding:0 1.5rem 3rem;position:relative;z-index:2}
+.l-nav{display:flex;align-items:center;justify-content:space-between;padding:1.15rem 0;border-bottom:1px solid rgba(255,140,80,.15)}
+.l-brand{display:flex;align-items:center;gap:.65rem;font-weight:600;font-size:1rem;color:#f5e6d3}
+.l-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;box-shadow:0 0 20px rgba(255,120,50,.35)}
+.l-nav-right{font-size:.82rem;color:#c9a88a}
 .l-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:2rem;align-items:center;padding:3rem 0 2.5rem}
-.l-eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#64748b;margin-bottom:.75rem}
-.l-headline{font-size:clamp(1.9rem,4.5vw,2.75rem);font-weight:700;color:#0f172a;line-height:1.15;letter-spacing:-.03em;margin-bottom:.9rem}
-.l-desc{font-size:1rem;color:#475569;line-height:1.55;max-width:420px;margin-bottom:1.5rem}
-.l-cta{display:inline-flex;align-items:center;gap:.45rem;padding:.75rem 1.4rem;font-size:.92rem;font-weight:600;
-  color:#fff;background:#0f2744;border:none;border-radius:12px;cursor:pointer;font-family:inherit;
-  box-shadow:0 8px 24px rgba(15,39,68,.25);transition:.2s}
-.l-cta:hover{transform:translateY(-2px);background:#163556;box-shadow:0 12px 28px rgba(15,39,68,.3)}
-.l-side-card{background:#0f2744;color:#fff;border-radius:16px;padding:1.75rem 1.5rem;min-height:160px;
-  display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 12px 40px rgba(15,39,68,.2)}
-.l-side-mark{font-size:2rem;font-weight:700;margin-bottom:auto;opacity:.95}
-.l-side-title{font-size:1.05rem;font-weight:600;margin-bottom:.35rem}
-.l-side-sub{font-size:.82rem;opacity:.75}
-.l-section-title{font-size:1.15rem;font-weight:600;color:#0f172a;margin-bottom:1rem}
+.l-eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#ffb07a;margin-bottom:.75rem}
+.l-headline{font-size:clamp(1.9rem,4.5vw,2.75rem);font-weight:700;line-height:1.15;letter-spacing:-.03em;margin-bottom:.9rem;
+  background:linear-gradient(135deg,#fff5eb,#ffb07a,#ff6b35);-webkit-background-clip:text;background-clip:text;color:transparent}
+.l-desc{font-size:1rem;color:#c9a88a;line-height:1.55;max-width:420px;margin-bottom:1.5rem}
+.l-cta{display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 1.5rem;font-size:.95rem;font-weight:600;
+  color:#1a0a00;background:linear-gradient(135deg,#ffb07a,#ff8c4a);border:none;border-radius:999px;cursor:pointer;font-family:inherit;
+  box-shadow:0 8px 28px rgba(255,120,50,.4);transition:.2s}
+.l-cta:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 36px rgba(255,120,50,.5)}
+.l-side-card{background:linear-gradient(145deg,rgba(40,18,10,.95),rgba(20,10,6,.98));color:#f5e6d3;border-radius:18px;padding:1.75rem 1.5rem;min-height:170px;
+  display:flex;flex-direction:column;justify-content:flex-end;border:1px solid rgba(255,140,80,.25);
+  box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 40px rgba(255,100,40,.12)}
+.l-side-mark{font-size:2rem;font-weight:700;margin-bottom:auto;background:linear-gradient(135deg,#fff5eb,#ff8c4a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.l-side-title{font-size:1.05rem;font-weight:600;margin-bottom:.35rem;color:#fff2e6}
+.l-side-sub{font-size:.82rem;color:#c9a88a}
+.l-section-title{font-size:1.15rem;font-weight:600;color:#f5e6d3;margin-bottom:1rem}
 .l-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2.5rem}
-.l-card{background:#fff;border:1px solid #e8eaee;border-radius:14px;padding:1.25rem 1.15rem;
-  box-shadow:0 2px 12px rgba(15,23,42,.04)}
-.l-card-icon{width:36px;height:36px;border-radius:10px;background:#eef2f7;display:flex;align-items:center;justify-content:center;
-  font-size:1rem;margin-bottom:.85rem;color:#3b5a80}
-.l-card h3{font-size:.95rem;font-weight:600;color:#0f172a;margin-bottom:.35rem}
-.l-card p{font-size:.82rem;color:#64748b;line-height:1.45}
-.l-footer{display:flex;justify-content:space-between;align-items:center;padding-top:1.25rem;border-top:1px solid #e4e6ea;
-  font-size:.78rem;color:#94a3b8}
+.l-card{background:rgba(18,12,10,.75);border:1px solid rgba(255,140,80,.18);border-radius:16px;padding:1.25rem 1.15rem;
+  backdrop-filter:blur(12px)}
+.l-card-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,120,50,.15);border:1px solid rgba(255,140,80,.22);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:.85rem;color:#ffb07a}
+.l-card h3{font-size:.95rem;font-weight:600;color:#fff2e6;margin-bottom:.35rem}
+.l-card p{font-size:.82rem;color:#c9a88a;line-height:1.45}
+.l-footer{display:flex;justify-content:space-between;align-items:center;padding-top:1.25rem;border-top:1px solid rgba(255,140,80,.12);
+  font-size:.78rem;color:rgba(201,168,138,.55)}
 @media(max-width:720px){
   .l-hero{grid-template-columns:1fr;padding:2rem 0 1.75rem}
   .l-cards{grid-template-columns:1fr}
@@ -110,7 +116,7 @@ body{min-height:100vh;position:relative}
 }
 /* APP */
 #app{position:relative;z-index:1;opacity:0;visibility:hidden;transition:opacity .6s ease .15s}
-#app.show{opacity:1;visibility:visible}
+#app.show{opacity:1!important;visibility:visible!important}
 .page{display:grid;grid-template-columns:1fr 280px;gap:1.5rem;max-width:1180px;margin:0 auto;padding:1.5rem 1.2rem 2.5rem;min-height:100vh}
 .main{display:flex;flex-direction:column;align-items:center}
 .top-bar{width:100%;display:flex;justify-content:flex-end;gap:.45rem;margin-bottom:.75rem}
@@ -201,7 +207,7 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
     <nav class="l-nav">
       <div class="l-brand">
         <img src="46dd29e8-fe5a-4aa0-bf87-647da055dea8.png" alt="" class="l-logo"/>
-        Sunset High School
+        Sunset
       </div>
       <div class="l-nav-right">Learning today. Leading tomorrow.</div>
     </nav>
@@ -240,7 +246,7 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
     </div>
 
     <footer class="l-footer">
-      <span>© Sunset High School</span>
+      <span>© Sunset</span>
       <span>Learn · Grow · Belong</span>
     </footer>
   </div>
@@ -284,7 +290,7 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 <a href="soccerbros.html" class="card"><div class="card-icon">⚽</div><h2>soccer bros</h2><p>2-player soccer action.</p><span class="card-cta">Play →</span></a>
 <div class="card" id="roblox-card" role="button" tabindex="0"><div class="card-icon">🟥</div><h2>roblox</h2><p>Open in frame.</p><span class="card-cta">Open →</span></div>
 </div>
-<footer><p>sunset high school · learn · grow · belong</p></footer>
+<footer><p>sunset · games</p></footer>
 </div>
 <aside class="sidebar">
 <div class="panel"><div class="panel-title">◷ Local Chronometer</div><div class="chrono-time" id="chrono-time">--:--:--</div><div class="chrono-date" id="chrono-date">—</div><div class="chrono-loc" id="chrono-loc">Detecting…</div></div>
@@ -337,15 +343,31 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 </div></div>
 
 <script>
+
+(function(){
+  function goToGames(){
+    var L=document.getElementById('landing');
+    var A=document.getElementById('app');
+    if(L){ L.classList.add('hide'); }
+    if(A){ A.classList.add('show'); A.style.opacity='1'; A.style.visibility='visible'; }
+  }
+  function bind(){
+    var btn=document.getElementById('enter-btn');
+    if(btn){
+      btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); goToGames(); });
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
+})();
+
 const THEME_KEY='sunset-theme',FX_KEY='sunset-fx';
 function applyTheme(n){document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.theme===n))}
 function applyFx(n){document.documentElement.setAttribute('data-fx',n);localStorage.setItem(FX_KEY,n);document.querySelectorAll('.fx-opt').forEach(b=>b.classList.toggle('active',b.dataset.fx===n));initFx()}
 applyTheme(localStorage.getItem(THEME_KEY)||'sunset');
 applyFx(localStorage.getItem(FX_KEY)||'orbs');
 
-const enterBtn=document.getElementById('enter-btn');
-function goToGames(){const L=document.getElementById('landing'),A=document.getElementById('app');if(L)L.classList.add('hide');if(A)A.classList.add('show')}
-if(enterBtn){enterBtn.addEventListener('click',function(e){e.preventDefault();goToGames()})}
+
 document.getElementById('themes-btn').onclick=()=>document.getElementById('themes-modal').classList.add('open');
 document.getElementById('themes-close').onclick=()=>document.getElementById('themes-modal').classList.remove('open');
 document.getElementById('themes-modal').onclick=e=>{if(e.target.id==='themes-modal')e.target.classList.remove('open')};
