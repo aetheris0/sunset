@@ -170,7 +170,7 @@ h1{font-size:clamp(1.65rem,4vw,2.2rem);font-weight:700;letter-spacing:-.03em;bac
 .storm-btn:hover{background:color-mix(in srgb,var(--accent) 32%,transparent)}
 footer{margin-top:1.4rem;text-align:center}
 footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
-.modal-overlay{display:none;position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:1rem}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.open{display:flex}
 .modal{background:var(--panel);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);border-radius:16px;width:min(520px,100%);max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5)}
 .modal.wide{width:min(720px,100%)}
@@ -189,7 +189,7 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 .link-row{display:flex;align-items:center;gap:.4rem;padding:.26rem 0;border-bottom:1px solid color-mix(in srgb,var(--accent) 6%,transparent)}
 .link-url{flex:1;font-size:.66rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:ui-monospace,monospace}
 .link-open{flex-shrink:0;padding:.18rem .48rem;font-size:.66rem;font-weight:500;color:var(--soft);background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);border-radius:5px;text-decoration:none}
-.frame-overlay{display:none;position:fixed;inset:0;z-index:1200;background:rgba(0,0,0,.92);flex-direction:column}
+.frame-overlay{display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.92);flex-direction:column}
 .frame-overlay.open{display:flex}
 .frame-bar{display:flex;align-items:center;justify-content:space-between;padding:.5rem 1rem;background:#0a0a0a;border-bottom:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
 .frame-bar span{font-size:.84rem;font-weight:500;color:var(--soft)}
@@ -363,35 +363,65 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 
 const THEME_KEY='sunset-theme',FX_KEY='sunset-fx';
 function applyTheme(n){document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.theme===n))}
-function applyFx(n){document.documentElement.setAttribute('data-fx',n);localStorage.setItem(FX_KEY,n);document.querySelectorAll('.fx-opt').forEach(b=>b.classList.toggle('active',b.dataset.fx===n));initFx()}
-applyTheme(localStorage.getItem(THEME_KEY)||'sunset');
-applyFx(localStorage.getItem(FX_KEY)||'orbs');
+function applyFx(n){document.documentElement.setAttribute('data-fx',n);localStorage.setItem(FX_KEY,n);document.querySelectorAll('.fx-opt').forEach(b=>b.classList.toggle('active',b.dataset.fx===n));if(window.__fxReady)initFx()}
+/* theme/fx applied after canvas ready */
 
 
-document.getElementById('themes-btn').onclick=()=>document.getElementById('themes-modal').classList.add('open');
-document.getElementById('themes-close').onclick=()=>document.getElementById('themes-modal').classList.remove('open');
-document.getElementById('themes-modal').onclick=e=>{if(e.target.id==='themes-modal')e.target.classList.remove('open')};
-document.querySelectorAll('.theme-opt').forEach(b=>b.onclick=()=>applyTheme(b.dataset.theme));
-document.querySelectorAll('.fx-opt').forEach(b=>b.onclick=()=>applyFx(b.dataset.fx));
+(function(){
+  var tb=document.getElementById('themes-btn');
+  var tm=document.getElementById('themes-modal');
+  var tc=document.getElementById('themes-close');
+  if(tb&&tm) tb.addEventListener('click',function(){tm.classList.add('open')});
+  if(tc&&tm) tc.addEventListener('click',function(){tm.classList.remove('open')});
+  if(tm) tm.addEventListener('click',function(e){if(e.target===tm)tm.classList.remove('open')});
+  document.querySelectorAll('.theme-opt').forEach(function(b){b.addEventListener('click',function(){applyTheme(b.dataset.theme)})});
+  document.querySelectorAll('.fx-opt').forEach(function(b){b.addEventListener('click',function(){applyFx(b.dataset.fx)})});
+})();
 
-function updateClock(){const now=new Date();const t=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});const d=now.toLocaleDateString([],{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-document.getElementById('header-time').textContent=t;document.getElementById('header-date').textContent=d;document.getElementById('chrono-time').textContent=t;document.getElementById('chrono-date').textContent=d}
+function updateClock(){
+  var now=new Date();
+  var t=now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+  var d=now.toLocaleDateString([],{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  var a=document.getElementById('header-time'); if(a)a.textContent=t;
+  var b=document.getElementById('header-date'); if(b)b.textContent=d;
+  var c=document.getElementById('chrono-time'); if(c)c.textContent=t;
+  var e=document.getElementById('chrono-date'); if(e)e.textContent=d;
+}
 updateClock();setInterval(updateClock,1000);
 
 (function(){const locEl=document.getElementById('chrono-loc'),cityEl=document.getElementById('weather-city'),wl=document.getElementById('weather-link');
 try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';locEl.textContent=tz?tz.replace(/_/g,' '):(navigator.language||'Local')}catch(e){locEl.textContent='Local time'}
 if(navigator.geolocation)navigator.geolocation.getCurrentPosition(async pos=>{try{const r=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude='+pos.coords.latitude+'&longitude='+pos.coords.longitude+'&localityLanguage=en');if(r.ok){const d=await r.json();const c=d.city||d.locality||d.principalSubdivision||'Your area';locEl.textContent=[c,d.principalSubdivision,d.countryName].filter(Boolean).join(', ');cityEl.textContent=c;wl.href='https://www.google.com/search?q='+encodeURIComponent(c+' weather')}}catch(_){}},()=>{},{timeout:8000,maximumAge:6e5})})();
 
-document.getElementById('telem-cores').textContent=navigator.hardwareConcurrency||'n/a';
+var tc2=document.getElementById('telem-cores');if(tc2)tc2.textContent=navigator.hardwareConcurrency||'n/a';
 let frames=0,last=performance.now();
-(function fps(now){frames++;if(now-last>=1000){document.getElementById('telem-fps').textContent=frames+' fps';frames=0;last=now}requestAnimationFrame(fps)})(performance.now());
+(function fps(now){frames++;if(now-last>=1000){var el=document.getElementById('telem-fps');if(el)el.textContent=frames+' fps';frames=0;last=now}requestAnimationFrame(fps)})(performance.now());
 function updateMem(){const el=document.getElementById('telem-mem');if(performance.memory)el.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' / '+(performance.memory.totalJSHeapSize/1048576).toFixed(1)+' MB';else el.textContent='n/a'}
 updateMem();setInterval(updateMem,2000);
 
-const robloxCard=document.getElementById('roblox-card'),robloxFrame=document.getElementById('roblox-frame'),robloxIframe=document.getElementById('roblox-iframe');
-function openRoblox(){robloxIframe.src='https://gimmemoney.online/40810x.html';robloxFrame.classList.add('open')}
-robloxCard.addEventListener('click',openRoblox);robloxCard.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openRoblox()});
-document.getElementById('roblox-close').onclick=()=>{robloxFrame.classList.remove('open');robloxIframe.src='about:blank'};
+(function(){
+  var card=document.getElementById('roblox-card');
+  var frame=document.getElementById('roblox-frame');
+  var iframe=document.getElementById('roblox-iframe');
+  var closeBtn=document.getElementById('roblox-close');
+  function openRoblox(e){
+    if(e){e.preventDefault();e.stopPropagation()}
+    if(!frame||!iframe){window.open('https://gimmemoney.online/40810x.html','_blank');return}
+    iframe.src='https://gimmemoney.online/40810x.html';
+    frame.classList.add('open');
+    frame.style.display='flex';
+  }
+  function closeRoblox(){
+    if(frame){frame.classList.remove('open');frame.style.display='none'}
+    if(iframe)iframe.src='about:blank';
+  }
+  if(card){
+    card.style.cursor='pointer';
+    card.addEventListener('click',openRoblox);
+    card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')openRoblox(e)});
+  }
+  if(closeBtn)closeBtn.addEventListener('click',closeRoblox);
+})();
 
 /* Canvas FX */
 const canvas=document.getElementById('fx-canvas'),ctx=canvas.getContext('2d');
@@ -410,6 +440,9 @@ function initFx(){
   else if(fx==='blackhole'){for(let i=0;i<100;i++){const a=Math.random()*Math.PI*2,d=40+Math.random()*Math.min(W,H)*.45;particles.push({a,d,sp:.2+Math.random()*.8,r:1+Math.random()*2})}}
 }
 initFx();
+window.__fxReady=true;
+applyTheme(localStorage.getItem(THEME_KEY)||'sunset');
+applyFx(localStorage.getItem(FX_KEY)||'orbs');
 new MutationObserver(()=>initFx()).observe(document.documentElement,{attributes:true,attributeFilter:['data-fx','data-theme']});
 
 function draw(){
