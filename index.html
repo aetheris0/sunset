@@ -287,6 +287,7 @@ body.cursor-hover #cursor-ring{width:40px;height:40px;border-color:var(--accent)
 <div class="telem-row"><span class="telem-label">Frame rate</span><span class="telem-value" id="telem-fps">—</span></div>
 <div class="telem-row"><span class="telem-label">JS memory</span><span class="telem-value" id="telem-mem">—</span></div>
 <div class="telem-row"><span class="telem-label">Processors</span><span class="telem-value" id="telem-cores">—</span></div>
+<div class="telem-row"><span class="telem-label">Battery</span><span class="telem-value" id="telem-battery">—</span></div>
 </div>
 <div class="panel">
 <div class="panel-title">♪ Music Player</div>
@@ -446,6 +447,21 @@ try{const tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';locEl.textCont
 if(navigator.geolocation)navigator.geolocation.getCurrentPosition(async pos=>{try{const r=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude='+pos.coords.latitude+'&longitude='+pos.coords.longitude+'&localityLanguage=en');if(r.ok){const d=await r.json();const c=d.city||d.locality||d.principalSubdivision||'Your area';locEl.textContent=[c,d.principalSubdivision,d.countryName].filter(Boolean).join(', ');cityEl.textContent=c;wl.href='https://www.google.com/search?q='+encodeURIComponent(c+' weather')}}catch(_){}},()=>{},{timeout:8000,maximumAge:6e5})})();
 
 var tc2=document.getElementById('telem-cores');if(tc2)tc2.textContent=navigator.hardwareConcurrency||'n/a';
+(function(){
+  var el=document.getElementById('telem-battery');
+  if(!el)return;
+  if(!navigator.getBattery){el.textContent='n/a';return}
+  navigator.getBattery().then(function(bat){
+    function update(){
+      var pct=Math.round((bat.level||0)*100);
+      var state=bat.charging?'Charging':'Not charging';
+      el.textContent=pct+'% · '+state;
+    }
+    update();
+    bat.addEventListener('levelchange',update);
+    bat.addEventListener('chargingchange',update);
+  }).catch(function(){el.textContent='n/a'});
+})();
 let frames=0,last=performance.now();
 (function fps(now){frames++;if(now-last>=1000){var el=document.getElementById('telem-fps');if(el)el.textContent=frames+' fps';frames=0;last=now}requestAnimationFrame(fps)})(performance.now());
 function updateMem(){const el=document.getElementById('telem-mem');if(performance.memory)el.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' / '+(performance.memory.totalJSHeapSize/1048576).toFixed(1)+' MB';else el.textContent='n/a'}
