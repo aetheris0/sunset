@@ -107,21 +107,21 @@ h1{font-size:clamp(1.65rem,4vw,2.2rem);font-weight:700;letter-spacing:-.03em;bac
   background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);
   border-radius:999px;text-decoration:none;white-space:nowrap;transition:.2s}
 .proxy-btn:hover{background:color-mix(in srgb,var(--accent) 20%,transparent);transform:translateY(-1px)}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:.95rem;width:100%}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.05rem 1rem .95rem;
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.65rem;width:100%}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.75rem .7rem .65rem;
   backdrop-filter:blur(14px);text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:.48rem;
   transition:.28s cubic-bezier(.22,1,.36,1);cursor:pointer;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 12%,transparent),transparent 55%);opacity:0;transition:.28s}
 .card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--accent) 55%,transparent);box-shadow:0 16px 40px rgba(0,0,0,.45),0 0 24px color-mix(in srgb,var(--glow) 40%,transparent)}
 .card:hover::before{opacity:1}
-.card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-  font-size:1.05rem;font-weight:700;letter-spacing:.02em;color:var(--soft);
+.card-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;font-weight:700;letter-spacing:.02em;color:var(--soft);
   background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 22%,transparent),color-mix(in srgb,var(--ga) 10%,transparent));
   border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--soft) 15%,transparent),0 4px 14px color-mix(in srgb,var(--glow) 25%,transparent);position:relative}
-.card h2{font-size:.94rem;font-weight:600;position:relative}
-.card p{font-size:.76rem;color:var(--muted);line-height:1.4;flex-grow:1;position:relative}
-.card-cta{font-size:.74rem;font-weight:500;color:var(--soft);position:relative}
+.card h2{font-size:.8rem;font-weight:600;position:relative}
+.card p{font-size:.68rem;color:var(--muted);line-height:1.35;flex-grow:1;position:relative}
+.card-cta{font-size:.68rem;font-weight:500;color:var(--soft);position:relative}
 .sidebar{display:flex;flex-direction:column;gap:.8rem;position:sticky;top:1rem;align-self:start}
 .panel{background:var(--panel);border:1px solid color-mix(in srgb,var(--accent) 15%,transparent);border-radius:14px;padding:.88rem .95rem;backdrop-filter:blur(14px)}
 .panel-title{font-size:.68rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--soft);margin-bottom:.55rem}
@@ -175,11 +175,34 @@ html,body,.card,.proxy-btn,.icon-btn,.l-cta,.theme-opt,.fx-opt,.font-opt,.frame-
 #cursor-dot{width:6px;height:6px;background:var(--accent);box-shadow:0 0 8px var(--glow)}
 #cursor-ring{width:28px;height:28px;border:1.5px solid var(--soft);transition:width .15s ease,height .15s ease,border-color .15s ease,opacity .15s;opacity:.85}
 body.cursor-hover #cursor-ring{width:40px;height:40px;border-color:var(--accent);opacity:1}
+
+#fx-vanta{position:fixed;inset:0;z-index:0;pointer-events:none!important}
+#fx-vanta canvas{pointer-events:none!important}
+.fx-dotpattern{position:fixed;inset:0;z-index:0;pointer-events:none!important;
+  background-image:radial-gradient(circle, var(--accent) 1px, transparent 1px);
+  background-size:22px 22px;opacity:.25}
+
+
+.chat-panel{display:flex;flex-direction:column;max-height:280px}
+.chat-log{flex:1;overflow-y:auto;min-height:120px;max-height:160px;margin-bottom:.5rem;padding:.35rem;border-radius:10px;
+  background:color-mix(in srgb,var(--accent) 6%,transparent);border:1px solid color-mix(in srgb,var(--accent) 12%,transparent);font-size:.75rem}
+.chat-msg{margin-bottom:.4rem;line-height:1.35;word-break:break-word}
+.chat-msg .u{color:var(--soft);font-weight:600;margin-right:.3rem}
+.chat-msg .t{color:color-mix(in srgb,var(--muted) 70%,transparent);font-size:.65rem;margin-left:.25rem}
+.chat-msg .b{color:var(--text)}
+.chat-user-row,.chat-send-row{display:flex;gap:.35rem;margin-bottom:.35rem}
+.chat-user-row input,.chat-send-row input{flex:1;min-width:0;padding:.35rem .5rem;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--text);font:inherit;font-size:.75rem}
+.chat-user-row button,.chat-send-row button{padding:.35rem .55rem;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+  background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--text);font:inherit;font-size:.72rem;cursor:pointer;white-space:nowrap}
+.chat-status{font-size:.65rem;color:var(--muted);margin-top:.2rem}
+
 </style>
 </head>
 <body>
 <div id="cursor-dot"></div><div id="cursor-ring"></div>
 <canvas id="fx-canvas"></canvas>
+<div id="fx-vanta"></div>
 <div class="bg-glow"></div>
 
 <div id="landing">
@@ -215,6 +238,7 @@ body.cursor-hover #cursor-ring{width:40px;height:40px;border-color:var(--accent)
 <div class="page">
 <div class="main">
 <div class="top-bar">
+  <button class="icon-btn" id="download-loader-btn" type="button">Download loader</button>
   <button class="icon-btn" id="themes-btn" type="button">Themes &amp; FX</button>
 </div>
 <header>
@@ -265,6 +289,8 @@ body.cursor-hover #cursor-ring{width:40px;height:40px;border-color:var(--accent)
 <div class="card" id="roblox-card" role="button" tabindex="0"><div class="card-icon">R</div><h2>roblox</h2><p>Open in frame.</p><span class="card-cta">Open →</span></div>
 <a href="Sunset-Soundboard.html" class="card"><div class="card-icon">S</div><h2>sunset soundboard</h2><p>Play sound effects and clips.</p><span class="card-cta">Open →</span></a>
 <a href="0-fix2.html" class="card"><div class="card-icon">B</div><h2>bowmaster</h2><p>Draw, aim, and release.</p><span class="card-cta">Play →</span></a>
+<a href="Basket_Battle.html" class="card"><div class="card-icon">B</div><h2>basket battle</h2><p>1v1 basketball showdown.</p><span class="card-cta">Play →</span></a>
+<a href="crossyroad.html" class="card"><div class="card-icon">C</div><h2>crossy road</h2><p>Cross the road. Don’t get hit.</p><span class="card-cta">Play →</span></a>
 </div>
 </div>
 
@@ -288,6 +314,21 @@ body.cursor-hover #cursor-ring{width:40px;height:40px;border-color:var(--accent)
 <div class="telem-row"><span class="telem-label">JS memory</span><span class="telem-value" id="telem-mem">—</span></div>
 <div class="telem-row"><span class="telem-label">Processors</span><span class="telem-value" id="telem-cores">—</span></div>
 <div class="telem-row"><span class="telem-label">Battery</span><span class="telem-value" id="telem-battery">—</span></div>
+</div>
+<div class="panel">
+<div class="panel-title">💬 Sunset Chat</div>
+<div class="chat-panel">
+  <div class="chat-log" id="chat-log"><div class="chat-msg"><span class="b" style="color:var(--muted)">Connecting…</span></div></div>
+  <div class="chat-user-row">
+    <input id="chat-user" maxlength="20" placeholder="Username" autocomplete="nickname"/>
+    <button type="button" id="chat-set-user">Set</button>
+  </div>
+  <div class="chat-send-row">
+    <input id="chat-input" maxlength="240" placeholder="Message…" autocomplete="off"/>
+    <button type="button" id="chat-send">Send</button>
+  </div>
+  <div class="chat-status" id="chat-status">Public room · be kind</div>
+</div>
 </div>
 <div class="panel">
 <div class="panel-title">♪ Music Player</div>
@@ -326,6 +367,12 @@ body.cursor-hover #cursor-ring{width:40px;height:40px;border-color:var(--accent)
 <button class="fx-opt" data-fx="matrix" type="button">Matrix</button>
 <button class="fx-opt" data-fx="flames" type="button">Flames</button>
 <button class="fx-opt" data-fx="blackhole" type="button">Blackhole</button>
+<button class="fx-opt" data-fx="vanta-dots" type="button">Vanta dots</button>
+<button class="fx-opt" data-fx="vanta-halo" type="button">Vanta halo</button>
+<button class="fx-opt" data-fx="dotpattern" type="button">Dot pattern</button>
+<button class="fx-opt" data-fx="drops" type="button">Drops</button>
+<button class="fx-opt" data-fx="lightning" type="button">Lightning</button>
+<button class="fx-opt" data-fx="warp" type="button">Warp waves</button>
 <button class="fx-opt" data-fx="none" type="button">None</button>
 </div></div>
 </div></div></div>
@@ -364,7 +411,7 @@ const THEME_KEY='sunset-theme',FX_KEY='sunset-fx',FONT_KEY='sunset-font';
 const THEMES=['sunset','ocean','forest','midnight','mono','crimson','cyber','gold','rose','ice','lava','mint','violet','amber','slate','cherry','neon','halloween','christmas','valentine','spooky','autumn','spring','summer','winter','pastel','noir','sunset2','galaxy','candy','matcha','berry'];
 const FONTS=['Outfit','Inter','Roboto','Open Sans','Lato','Montserrat','Poppins','Raleway','Nunito','Source Sans 3','Work Sans','Rubik','Karla','Mulish','Manrope','DM Sans','Space Grotesk','Plus Jakarta Sans','Figtree','Lexend','Sora','Urbanist','Archivo','Barlow','Cabin','Catamaran','Chivo','Comfortaa','Crimson Text','Dancing Script','EB Garamond','Exo 2','Fira Sans','Francois One','Fredoka','Gabarito','Geologica','Heebo','Hind','IBM Plex Sans','Inconsolata','Instrument Sans','Josefin Sans','Jost','Kanit','Kumbh Sans','Libre Franklin','Literata','Lobster','Maven Pro','Merriweather','Mukta','Noto Sans','Noto Serif','Oswald','Overpass','Pacifico','Playfair Display','PT Sans','PT Serif','Public Sans','Quicksand','Rajdhani','Red Hat Display','Roboto Condensed','Roboto Mono','Roboto Slab','Rubik Mono One','Satisfy','Signika','Silkscreen','Sofia Sans','Spectral','Syne','Teko','Titillium Web','Ubuntu','Varela Round','Vollkorn','Yanone Kaffeesatz','Young Serif','Zilla Slab','Bebas Neue','Anton','Abril Fatface','Alfa Slab One','Amatic SC','Bangers','Black Ops One','Caveat','Cinzel','Cormorant Garamond','Courgette','Creepster','Great Vibes','Indie Flower','Luckiest Guy','Orbitron','Permanent Marker','Press Start 2P','Righteous','Shadows Into Light','Special Elite'];
 
-function applyTheme(n){document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.theme===n))}
+function applyTheme(n){document.documentElement.setAttribute('data-theme',n);localStorage.setItem(THEME_KEY,n);document.querySelectorAll('.theme-opt').forEach(b=>b.classList.toggle('active',b.dataset.theme===n));var fx=document.documentElement.getAttribute('data-fx');if(fx==='vanta-dots'||fx==='vanta-halo'||fx==='dotpattern'){if(window.__fxReady)initFx()}}
 function applyFx(n){document.documentElement.setAttribute('data-fx',n);localStorage.setItem(FX_KEY,n);document.querySelectorAll('.fx-opt').forEach(b=>b.classList.toggle('active',b.dataset.fx===n));if(window.__fxReady)initFx()}
 function applyFont(name){
   localStorage.setItem(FONT_KEY,name);
@@ -467,6 +514,67 @@ let frames=0,last=performance.now();
 function updateMem(){const el=document.getElementById('telem-mem');if(performance.memory)el.textContent=(performance.memory.usedJSHeapSize/1048576).toFixed(1)+' / '+(performance.memory.totalJSHeapSize/1048576).toFixed(1)+' MB';else el.textContent='n/a'}
 updateMem();setInterval(updateMem,2000);
 
+
+(function(){
+  var btn=document.getElementById('download-loader-btn');
+  if(!btn)return;
+  var loaderHtml="<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<title>Sunset</title>\n<style>\n  html,body{margin:0;min-height:100%;background:#0a0605;color:#f5e6d3;font:16px system-ui,sans-serif}\n  body{display:flex;align-items:center;justify-content:center;padding:24px}\n  .box{max-width:420px;width:100%;text-align:center}\n  .mark{width:56px;height:56px;border-radius:14px;margin:0 auto 1rem;background:linear-gradient(145deg,#ff8c4a,#ff6b35);box-shadow:0 0 32px rgba(255,120,50,.35)}\n  h1{font-size:1.35rem;font-weight:700;margin:0 0 .5rem;background:linear-gradient(135deg,#fff5eb,#ffb07a,#ff6b35);-webkit-background-clip:text;background-clip:text;color:transparent}\n  #status{color:#c9a88a;line-height:1.45;margin:0 0 1.25rem}\n  .btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap}\n  button{padding:.55rem 1rem;border-radius:999px;border:1px solid rgba(255,140,80,.35);background:rgba(255,140,80,.15);color:#f5e6d3;font:inherit;font-size:.85rem;cursor:pointer}\n  button:hover{background:rgba(255,140,80,.28)}\n  button[hidden]{display:none}\n
+#fx-vanta{position:fixed;inset:0;z-index:0;pointer-events:none!important}
+#fx-vanta canvas{pointer-events:none!important}
+.fx-dotpattern{position:fixed;inset:0;z-index:0;pointer-events:none!important;
+  background-image:radial-gradient(circle, var(--accent) 1px, transparent 1px);
+  background-size:22px 22px;opacity:.25}
+
+
+.chat-panel{display:flex;flex-direction:column;max-height:280px}
+.chat-log{flex:1;overflow-y:auto;min-height:120px;max-height:160px;margin-bottom:.5rem;padding:.35rem;border-radius:10px;
+  background:color-mix(in srgb,var(--accent) 6%,transparent);border:1px solid color-mix(in srgb,var(--accent) 12%,transparent);font-size:.75rem}
+.chat-msg{margin-bottom:.4rem;line-height:1.35;word-break:break-word}
+.chat-msg .u{color:var(--soft);font-weight:600;margin-right:.3rem}
+.chat-msg .t{color:color-mix(in srgb,var(--muted) 70%,transparent);font-size:.65rem;margin-left:.25rem}
+.chat-msg .b{color:var(--text)}
+.chat-user-row,.chat-send-row{display:flex;gap:.35rem;margin-bottom:.35rem}
+.chat-user-row input,.chat-send-row input{flex:1;min-width:0;padding:.35rem .5rem;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--text);font:inherit;font-size:.75rem}
+.chat-user-row button,.chat-send-row button{padding:.35rem .55rem;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+  background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--text);font:inherit;font-size:.72rem;cursor:pointer;white-space:nowrap}
+.chat-status{font-size:.65rem;color:var(--muted);margin-top:.2rem}
+
+</style>\n</head>\n<body>\n<div class=\"box\">\n  <div class=\"mark\" aria-hidden=\"true\"></div>\n  <h1>Sunset</h1>\n  <p id=\"status\" role=\"status\">Checking for the latest Sunset\u2026</p>\n  <div class=\"btns\">\n    <button id=\"retry\" hidden>Try again</button>\n    <button id=\"older\" hidden>Load saved version instead</button>\n  </div>\n</div>\n<script>\n(()=>{\nconst repo='aetheris0/sunset';\nconst file='index.html';\nconst key='sunset-loader-aetheris0-sunset-commit';\nconst status=document.getElementById('status');\nconst retry=document.getElementById('retry');\nconst older=document.getElementById('older');\nlet saved='',busy=false;\ntry{saved=localStorage.getItem(key)||''}catch{}\n\nconst raw=ref=>'https://raw.githubusercontent.com/'+repo+'/'+ref+'/'+file;\nconst cdns=ref=>[\n  'cdn.jsdelivr.net',\n  'fastly.jsdelivr.net',\n  'gcore.jsdelivr.net',\n  'testingcf.jsdelivr.net'\n].map(host=>'https://'+host+'/gh/'+repo+'@'+ref+'/'+file);\n\nfunction baseFromUrl(url){return url.replace(/\\/[^\\/]*$/,'/')}\n\n/* Injected into Sunset page.\n   IMPORTANT: open about:blank synchronously on click (user gesture),\n   then fetch + document.write into that window. */\nconst interceptScript = `\n<script>\n(function(){\n  function absUrl(href){\n    try{return new URL(href, document.baseURI).href}catch(e){return href}\n  }\n  function isGameOrProxy(a){\n    if(!a||!a.getAttribute)return false;\n    if(a.matches && (a.matches('a.card')||a.matches('a.proxy-btn')))return true;\n    return a.classList&&(a.classList.contains('card')||a.classList.contains('proxy-btn'));\n  }\n  document.addEventListener('click',function(e){\n    var a=e.target.closest ? e.target.closest('a') : null;\n    if(!isGameOrProxy(a))return;\n    var href=a.getAttribute('href');\n    if(!href||href==='#'||href.indexOf('javascript:')===0)return;\n    // leave pure external sites alone (not repo mirrors)\n    if(/^https?:\\\\/\\\\//i.test(href) && !/raw\\\\.githubusercontent|jsdelivr|githack|statically|github/i.test(href))return;\n\n    e.preventDefault();\n    e.stopPropagation();\n\n    var url=absUrl(href);\n    // Open immediately while still in the click gesture\n    var w=window.open('about:blank','_blank');\n    if(!w){\n      alert('Popup blocked. Allow popups for this site, then try again.');\n      return;\n    }\n    try{\n      w.document.open();\n      w.document.write('<!doctype html><html><head><meta charset=\"utf-8\"><title>Loading\u2026</title><style>body{margin:0;background:#0a0605;color:#c9a88a;font:16px system-ui;display:flex;align-items:center;justify-content:center;min-height:100vh}
+#fx-vanta{position:fixed;inset:0;z-index:0;pointer-events:none!important}
+#fx-vanta canvas{pointer-events:none!important}
+.fx-dotpattern{position:fixed;inset:0;z-index:0;pointer-events:none!important;
+  background-image:radial-gradient(circle, var(--accent) 1px, transparent 1px);
+  background-size:22px 22px;opacity:.25}
+
+
+.chat-panel{display:flex;flex-direction:column;max-height:280px}
+.chat-log{flex:1;overflow-y:auto;min-height:120px;max-height:160px;margin-bottom:.5rem;padding:.35rem;border-radius:10px;
+  background:color-mix(in srgb,var(--accent) 6%,transparent);border:1px solid color-mix(in srgb,var(--accent) 12%,transparent);font-size:.75rem}
+.chat-msg{margin-bottom:.4rem;line-height:1.35;word-break:break-word}
+.chat-msg .u{color:var(--soft);font-weight:600;margin-right:.3rem}
+.chat-msg .t{color:color-mix(in srgb,var(--muted) 70%,transparent);font-size:.65rem;margin-left:.25rem}
+.chat-msg .b{color:var(--text)}
+.chat-user-row,.chat-send-row{display:flex;gap:.35rem;margin-bottom:.35rem}
+.chat-user-row input,.chat-send-row input{flex:1;min-width:0;padding:.35rem .5rem;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent);color:var(--text);font:inherit;font-size:.75rem}
+.chat-user-row button,.chat-send-row button{padding:.35rem .55rem;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+  background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--text);font:inherit;font-size:.72rem;cursor:pointer;white-space:nowrap}
+.chat-status{font-size:.65rem;color:var(--muted);margin-top:.2rem}
+
+</style></head><body>Loading\u2026</body></html>');\n      w.document.close();\n    }catch(_){}\n\n    fetch(url,{cache:'no-store'}).then(function(r){\n      if(!r.ok)throw new Error('HTTP '+r.status);\n      return r.text();\n    }).then(function(html){\n      try{\n        w.document.open();\n        w.document.write(html);\n        w.document.close();\n      }catch(err){\n        try{w.location.href=url}catch(__){}\n      }\n    }).catch(function(){\n      try{\n        w.document.open();\n        w.document.write('<!doctype html><html><body style=\"font:16px system-ui;background:#0a0605;color:#f5e6d3;padding:24px\">Could not load this page.<br><br><a style=\"color:#ffb07a\" href=\"'+url.replace(/\"/g,'&quot;')+'\">Open directly</a></body></html>');\n        w.document.close();\n      }catch(__){\n        try{w.location.href=url}catch(___){}\n      }\n    });\n  },true);\n})();\n<\\/script>`;\n\nfunction patchHtml(html, base){\n  var baseTag='<base href=\"'+base+'\">';\n  if(/<base\\s/i.test(html)) html=html.replace(/<base[^>]*>/i, baseTag);\n  else if(/<head[^>]*>/i.test(html)) html=html.replace(/<head[^>]*>/i, function(m){return m+baseTag});\n  else html=baseTag+html;\n\n  if(/<\\/body>/i.test(html)) html=html.replace(/<\\/body>/i, interceptScript+'</body>');\n  else html+=interceptScript;\n  return html;\n}\n\nasync function download(url,ref){\n  try{\n    const r=await fetch(url+(url.includes('?')?'&':'?')+'sunset_load='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(25000)});\n    if(!r.ok)return false;\n    let html=await r.text();\n    if(!/<html[\\s>]/i.test(html))return false;\n    if(!html.includes('Sunset')&&!html.includes('data-theme'))return false;\n    try{if(/^[a-f0-9]{40}$/.test(ref))localStorage.setItem(key,ref)}catch{}\n    const base=baseFromUrl(url.split('?')[0]);\n    html=patchHtml(html, base);\n    window.sunsetLoaderInfo={ref,source:url,base:base};\n    document.open();\n    document.write(html);\n    document.close();\n    return true;\n  }catch{return false}\n}\n\nasync function start(){\n  if(busy)return;\n  busy=true;\n  retry.hidden=older.hidden=true;\n  status.textContent='Checking for the latest Sunset\u2026';\n  let latest='';\n  try{\n    const r=await fetch('https://api.github.com/repos/'+repo+'/commits/main?sunset_check='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(8000)});\n    if(r.ok){\n      const data=await r.json();\n      if(/^[a-f0-9]{40}$/.test(data.sha))latest=data.sha;\n    }\n  }catch{}\n\n  const sources=latest?[...cdns(latest),raw(latest)]:[...cdns('main'),raw('main')];\n  for(const url of sources){\n    status.textContent=latest?'Loading the latest verified version\u2026':'GitHub version check unavailable. Trying the current branch\u2026';\n    if(await download(url,latest||'main'))return;\n  }\n  busy=false;\n  status.textContent='The current version could not be loaded. Retry, or explicitly open your saved version.';\n  retry.hidden=false;\n  older.hidden=!/^[a-f0-9]{40}$/.test(saved);\n}\n\nretry.onclick=start;\nolder.onclick=async()=>{\n  if(busy)return;\n  busy=true;\n  status.textContent='Loading your saved version (may be outdated)\u2026';\n  for(const url of [...cdns(saved),raw(saved)]) if(await download(url,saved))return;\n  busy=false;\n  status.textContent='Saved version unavailable. Check your connection and retry.';\n  retry.hidden=false;\n};\n\nstart();\n})();\n</script>\n</body>\n</html>\n";
+  btn.addEventListener('click',function(){
+    var blob=new Blob([loaderHtml],{type:'text/html'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='sunset-loader.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+  });
+})();
+
 (function(){
   var audio=document.getElementById('music-audio'),file=document.getElementById('music-file');
   var play=document.getElementById('music-play'),pause=document.getElementById('music-pause'),loop=document.getElementById('music-loop');
@@ -488,6 +596,147 @@ updateMem();setInterval(updateMem,2000);
   if(closeBtn)closeBtn.addEventListener('click',closeRoblox);
 })();
 
+
+/* Vanta / external FX */
+var vantaEffect=null;
+var dotPatternEl=null;
+function hexToInt(h){h=(h||'#ff8c4a').replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];return parseInt(h,16)}
+function loadScript(src){
+  return new Promise(function(res,rej){
+    if(document.querySelector('script[src="'+src+'"]')){res();return}
+    var s=document.createElement('script');s.src=src;s.onload=function(){res()};s.onerror=rej;document.head.appendChild(s);
+  });
+}
+function destroyVanta(){
+  if(vantaEffect&&vantaEffect.destroy){try{vantaEffect.destroy()}catch(e){}}
+  vantaEffect=null;
+  var el=document.getElementById('fx-vanta');
+  if(el)el.innerHTML='';
+}
+function destroyDotPattern(){
+  if(dotPatternEl){dotPatternEl.remove();dotPatternEl=null}
+}
+function ensureDotPattern(){
+  destroyDotPattern();
+  var d=document.createElement('div');
+  d.className='fx-dotpattern';
+  d.style.backgroundImage='radial-gradient(circle, '+cssVar('--accent')+' 1.2px, transparent 1.2px)';
+  document.body.insertBefore(d, document.getElementById('fx-canvas'));
+  dotPatternEl=d;
+}
+async function startVanta(kind){
+  destroyVanta();
+  destroyDotPattern();
+  var el=document.getElementById('fx-vanta');
+  if(!el)return;
+  try{
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js');
+    if(kind==='dots'){
+      await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js');
+      vantaEffect=VANTA.DOTS({
+        el:el,mouseControls:true,touchControls:true,gyroControls:false,
+        minHeight:200,minWidth:200,scale:1,scaleMobile:1,
+        size:3.1,spacing:20,
+        backgroundColor:hexToInt(cssVar('--bg')||'#050505'),
+        color:hexToInt(cssVar('--accent')||'#ff8c4a'),
+        color2:hexToInt(cssVar('--ga')||'#ff6b35')
+      });
+    }else if(kind==='halo'){
+      await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.halo.min.js');
+      vantaEffect=VANTA.HALO({
+        el:el,mouseControls:true,touchControls:true,gyroControls:false,
+        minHeight:200,minWidth:200,
+        backgroundColor:hexToInt(cssVar('--bg')||'#050505'),
+        baseColor:hexToInt(cssVar('--ga')||'#ff6b35'),
+        color2:hexToInt(cssVar('--accent')||'#ff8c4a'),
+        size:1.0
+      });
+    }
+  }catch(e){console.warn('Vanta failed',e)}
+}
+
+
+(function(){
+  var ROOM='sunset-public-chat-v1';
+  var log=document.getElementById('chat-log');
+  var userIn=document.getElementById('chat-user');
+  var setBtn=document.getElementById('chat-set-user');
+  var input=document.getElementById('chat-input');
+  var sendBtn=document.getElementById('chat-send');
+  var status=document.getElementById('chat-status');
+  if(!log)return;
+
+  var username=localStorage.getItem('sunset-chat-user')||'';
+  if(userIn&&username)userIn.value=username;
+
+  function esc(s){
+    return String(s||'').replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]});
+  }
+  function addMsg(m,mine){
+    var d=document.createElement('div');
+    d.className='chat-msg';
+    var time='';
+    try{time=new Date(m.t||Date.now()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}catch(e){}
+    d.innerHTML='<span class="u">'+esc(m.u||'anon')+'</span><span class="b">'+esc(m.b||'')+'</span><span class="t">'+esc(time)+'</span>';
+    if(mine)d.style.opacity='0.95';
+    log.appendChild(d);
+    log.scrollTop=log.scrollHeight;
+    while(log.children.length>80)log.removeChild(log.firstChild);
+  }
+
+  function setStatus(t){if(status)status.textContent=t}
+
+  // Load Gun
+  var gunScript=document.createElement('script');
+  gunScript.src='https://cdn.jsdelivr.net/npm/gun/gun.js';
+  gunScript.onload=function(){
+    try{
+      var gun=Gun(['https://gun-manhattan.herokuapp.com/gun','https://peer.wallie.io/gun']);
+      var room=gun.get(ROOM);
+      var seen={};
+      setStatus('Connected · public room');
+      log.innerHTML='';
+      room.map().on(function(data,id){
+        if(!data||!data.b||seen[id])return;
+        seen[id]=1;
+        addMsg(data,data.u===username);
+      });
+      function send(){
+        if(!username){setStatus('Set a username first');return}
+        var text=(input&&input.value||'').trim();
+        if(!text)return;
+        if(text.length>240)text=text.slice(0,240);
+        var msg={u:username,b:text,t:Date.now()};
+        room.set(msg);
+        if(input)input.value='';
+        setStatus('Sent');
+        setTimeout(function(){setStatus('Connected · public room')},1200);
+      }
+      if(sendBtn)sendBtn.onclick=send;
+      if(input)input.addEventListener('keydown',function(e){if(e.key==='Enter')send()});
+      window.__sunsetChatSend=send;
+      window.__sunsetChatRoom=room;
+    }catch(e){
+      setStatus('Chat unavailable');
+      log.innerHTML='<div class="chat-msg"><span class="b" style="color:var(--muted)">Could not connect.</span></div>';
+    }
+  };
+  gunScript.onerror=function(){
+    setStatus('Chat library failed to load');
+    log.innerHTML='<div class="chat-msg"><span class="b" style="color:var(--muted)">Offline.</span></div>';
+  };
+  document.head.appendChild(gunScript);
+
+  if(setBtn)setBtn.onclick=function(){
+    var v=(userIn&&userIn.value||'').trim().replace(/\s+/g,' ');
+    if(!v){setStatus('Enter a username');return}
+    if(v.length>20)v=v.slice(0,20);
+    username=v;
+    localStorage.setItem('sunset-chat-user',username);
+    setStatus('Username set to '+username);
+  };
+})();
+
 const canvas=document.getElementById('fx-canvas'),ctx=canvas.getContext('2d');
 let W=0,H=0,particles=[],t=0,drops=[];
 function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight}
@@ -496,12 +745,21 @@ function cssVar(n){return getComputedStyle(document.documentElement).getProperty
 function initFx(){
   const fx=document.documentElement.getAttribute('data-fx')||'orbs';
   particles=[];drops=[];
+  destroyVanta();
+  destroyDotPattern();
+  canvas.style.display='block';
+  if(fx==='vanta-dots'){canvas.style.display='none';startVanta('dots');return}
+  if(fx==='vanta-halo'){canvas.style.display='none';startVanta('halo');return}
+  if(fx==='dotpattern'){canvas.style.display='none';ensureDotPattern();return}
   if(fx==='stars'){for(let i=0;i<90;i++)particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.2,s:Math.random()*.5+.1,a:Math.random()})}
   else if(fx==='snow'){for(let i=0;i<55;i++)particles.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.5+1,vy:Math.random()*1.3+.3,vx:Math.random()*.6-.3})}
   else if(fx==='orbs'){for(let i=0;i<6;i++)particles.push({x:Math.random()*W,y:Math.random()*H,r:50+Math.random()*110,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35})}
   else if(fx==='matrix'){const cols=Math.floor(W/14);for(let i=0;i<cols;i++)drops.push({x:i*14,y:Math.random()*-H,sp:2+Math.random()*6,len:8+Math.random()*18})}
   else if(fx==='flames'){for(let i=0;i<40;i++)particles.push({x:Math.random()*W,y:H+Math.random()*40,r:8+Math.random()*20,vy:-(1+Math.random()*3),vx:(Math.random()-.5)*1.2,life:Math.random()})}
   else if(fx==='blackhole'){for(let i=0;i<70;i++){const a=Math.random()*Math.PI*2,d=40+Math.random()*Math.min(W,H)*.45;particles.push({a,d,sp:.2+Math.random()*.8,r:1+Math.random()*2})}}
+  else if(fx==='drops'){for(let i=0;i<80;i++)particles.push({x:Math.random()*W,y:Math.random()*H,len:8+Math.random()*16,vy:4+Math.random()*8,w:1+Math.random()*1.5})}
+  else if(fx==='lightning'){particles={bol:[],timer:0}}
+  else if(fx==='warp'){/* drawn procedurally in draw() */}
 }
 initFx();
 window.__fxReady=true;
@@ -524,6 +782,76 @@ function draw(){
   else if(fx==='matrix'){ctx.font='13px monospace';drops.forEach(function(d){d.y+=d.sp;if(d.y>H+d.len*14){d.y=-d.len*14;d.sp=2+Math.random()*6}for(let i=0;i<d.len;i++){const ch=String.fromCharCode(0x30A0+Math.floor(Math.random()*96));const alpha=1-i/d.len;ctx.fillStyle=i===0?'#fff':(ga+Math.floor(alpha*200).toString(16).padStart(2,'0'));ctx.fillText(ch,d.x,d.y-i*14)}})}
   else if(fx==='flames'){particles.forEach(function(p){p.y+=p.vy;p.x+=p.vx;p.life+=0.02;p.r*=0.985;if(p.y<H*.3||p.r<2){p.x=Math.random()*W;p.y=H+10;p.r=8+Math.random()*22;p.vy=-(1+Math.random()*3);p.life=0}const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);g.addColorStop(0,'#fff6');g.addColorStop(.3,ga+'aa');g.addColorStop(.7,gb+'55');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()})}
   else if(fx==='blackhole'){const cx=W/2,cy=H/2;const hole=Math.min(W,H)*.08;const hg=ctx.createRadialGradient(cx,cy,0,cx,cy,hole*3);hg.addColorStop(0,'#000');hg.addColorStop(.4,'#000');hg.addColorStop(.7,ga+'33');hg.addColorStop(1,'transparent');ctx.fillStyle=hg;ctx.beginPath();ctx.arc(cx,cy,hole*3,0,Math.PI*2);ctx.fill();particles.forEach(function(p){p.a+=p.sp*0.02;p.d=Math.max(hole*1.2,p.d-0.15);if(p.d<=hole*1.3){p.d=40+Math.random()*Math.min(W,H)*.45;p.a=Math.random()*Math.PI*2}const x=cx+Math.cos(p.a)*p.d,y=cy+Math.sin(p.a)*p.d*.55;ctx.beginPath();ctx.arc(x,y,p.r,0,Math.PI*2);ctx.fillStyle=accent+'cc';ctx.fill()})}
+  else if(fx==='drops'){
+    ctx.strokeStyle=accent+'99';ctx.lineWidth=1.5;
+    particles.forEach(function(p){
+      p.y+=p.vy;if(p.y>H+20){p.y=-20;p.x=Math.random()*W}
+      ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x,p.y+p.len);ctx.stroke();
+    });
+  }
+  else if(fx==='lightning'){
+    if(!particles||!particles.bolts)particles={bolts:[],timer:0};
+    particles.timer-=1;
+    if(particles.timer<=0){
+      particles.timer=40+Math.random()*90;
+      var bolts=[];
+      var sx=W*(0.15+Math.random()*0.7),sy=0,x=sx,y=sy;
+      bolts.push({x:x,y:y});
+      while(y<H*0.85){
+        x+=(Math.random()-0.5)*60;
+        y+=12+Math.random()*28;
+        bolts.push({x:x,y:y});
+        if(Math.random()<0.28){
+          var bx=x,by=y;
+          for(var k=0;k<4;k++){bx+=(Math.random()-0.5)*40;by+=10+Math.random()*18;bolts.push({x:bx,y:by,branch:true})}
+        }
+      }
+      particles.bolts=bolts;
+      particles.alpha=1;
+    }
+    if(particles.bolts&&particles.bolts.length){
+      particles.alpha*=0.92;
+      ctx.strokeStyle=accent;
+      ctx.shadowColor=accent;
+      ctx.shadowBlur=18;
+      ctx.globalAlpha=Math.max(0,particles.alpha);
+      ctx.lineWidth=2.2;
+      ctx.beginPath();
+      particles.bolts.forEach(function(p,i){if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)});
+      ctx.stroke();
+      ctx.shadowBlur=0;ctx.globalAlpha=1;
+    }
+  }
+  else if(fx==='warp'){
+    // procedural warp / wave field (inspired by shader wave pens)
+    var img=ctx.createImageData(W,H);
+    var data=img.data;
+    var t1=t*0.4;
+    // downsample for performance
+    var step=3;
+    for(var y=0;y<H;y+=step){
+      for(var x=0;x<W;x+=step){
+        var u=(x/W-0.5),v=(y/H-0.5);
+        var d=Math.sqrt(u*u+v*v);
+        var w=Math.sin(d*14-t1*2)+Math.sin((u*8+t1)*1.3)+Math.cos((v*9-t1)*1.1);
+        var n=(w+3)/6;
+        var r=parseInt((cssVar('--ga')||'#ff6b35').slice(1,3),16)||255;
+        var g=parseInt((cssVar('--ga')||'#ff6b35').slice(3,5),16)||100;
+        var b=parseInt((cssVar('--ga')||'#ff6b35').slice(5,7),16)||50;
+        var ar=parseInt((accent||'#ff8c4a').slice(1,3),16)||255;
+        var ag=parseInt((accent||'#ff8c4a').slice(3,5),16)||140;
+        var ab=parseInt((accent||'#ff8c4a').slice(5,7),16)||70;
+        var rr=(r*(1-n)+ar*n)|0,gg=(g*(1-n)+ag*n)|0,bb=(b*(1-n)+ab*n)|0;
+        for(var dy=0;dy<step&&y+dy<H;dy++){
+          for(var dx=0;dx<step&&x+dx<W;dx++){
+            var i=((y+dy)*W+(x+dx))*4;
+            data[i]=rr;data[i+1]=gg;data[i+2]=bb;data[i+3]=40+n*90;
+          }
+        }
+      }
+    }
+    ctx.putImageData(img,0,0);
+  }
   requestAnimationFrame(draw);
 }
 requestAnimationFrame(draw);
