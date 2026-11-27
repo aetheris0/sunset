@@ -170,15 +170,34 @@ footer p{font-size:.68rem;color:color-mix(in srgb,var(--muted) 55%,transparent)}
 .frame-bar span{font-size:.84rem;font-weight:500;color:var(--soft)}
 .frame-overlay iframe{flex:1;width:100%;border:none;background:#111}
 @media(max-width:900px){.page{grid-template-columns:1fr}.sidebar{position:static;order:-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}}
-*{cursor:none!important}
-input,textarea,select,[contenteditable="true"]{cursor:text!important}
-#cursor-dot,#cursor-ring{position:fixed!important;left:0;top:0;pointer-events:none!important;z-index:2147483646!important;border-radius:50%;transform:translate(-50%,-50%);display:block!important}
-#cursor-dot{width:8px;height:8px;background:var(--accent);box-shadow:0 0 10px var(--glow),0 0 2px #000;border:1px solid color-mix(in srgb,var(--soft) 80%,#fff)}
-#cursor-ring{width:30px;height:30px;border:1.5px solid var(--soft);box-shadow:0 0 12px color-mix(in srgb,var(--glow) 50%,transparent);transition:width .12s ease,height .12s ease,border-color .12s ease,opacity .12s;opacity:.9;background:transparent}
-body.cursor-hover #cursor-ring{width:42px;height:42px;border-color:var(--accent);opacity:1}
-body.cursor-hide-custom #cursor-dot,body.cursor-hide-custom #cursor-ring{display:none!important}
-body.cursor-hide-custom,body.cursor-hide-custom *{cursor:auto!important}
-body.cursor-hide-custom input,body.cursor-hide-custom textarea{cursor:text!important}
+/* custom cursor */
+html.custom-cursor, html.custom-cursor body, html.custom-cursor body *{cursor:none!important}
+html.custom-cursor input,html.custom-cursor textarea,html.custom-cursor select,html.custom-cursor [contenteditable="true"]{cursor:text!important}
+#cursor-dot,#cursor-ring{
+  position:fixed!important;top:0!important;left:0!important;
+  margin:0!important;padding:0!important;
+  pointer-events:none!important;z-index:2147483646!important;
+  border-radius:50%;will-change:transform;opacity:0;
+  transition:opacity .15s ease;
+}
+#cursor-dot{
+  width:8px;height:8px;
+  background:var(--accent,#ff8c4a);
+  box-shadow:0 0 10px var(--glow,rgba(255,120,50,.4)),0 0 1px #000;
+  border:1px solid rgba(255,255,255,.35);
+}
+#cursor-ring{
+  width:30px;height:30px;
+  border:1.5px solid var(--soft,#ffb07a);
+  background:transparent;
+  box-shadow:0 0 12px color-mix(in srgb,var(--glow,rgba(255,120,50,.4)) 40%,transparent);
+  transition:width .12s ease,height .12s ease,border-color .12s ease,opacity .15s ease;
+}
+html.custom-cursor.cursor-on #cursor-dot,
+html.custom-cursor.cursor-on #cursor-ring{opacity:1}
+html.custom-cursor.cursor-hover #cursor-ring{
+  width:44px;height:44px;border-color:var(--accent,#ff8c4a);
+}
 
 #fx-vanta{position:fixed;inset:0;z-index:0;pointer-events:none!important}
 #fx-vanta canvas{pointer-events:none!important}
@@ -396,44 +415,55 @@ body.cursor-hide-custom input,body.cursor-hide-custom textarea{cursor:text!impor
 
 <script>
 (function(){
-  // Prefer fine pointer (mouse); skip custom cursor on touch-primary devices
   try{
-    if(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches){
-      document.body.classList.add('cursor-hide-custom');
-      return;
-    }
+    if(window.matchMedia && window.matchMedia('(hover:none) and (pointer:coarse)').matches)return;
   }catch(e){}
+
   var dot=document.getElementById('cursor-dot');
   var ring=document.getElementById('cursor-ring');
-  if(!dot||!ring){
-    dot=document.createElement('div');dot.id='cursor-dot';
-    ring=document.createElement('div');ring.id='cursor-ring';
-    document.body.appendChild(dot);document.body.appendChild(ring);
-  }
-  // Keep above everything
+  if(!dot){dot=document.createElement('div');dot.id='cursor-dot';document.body.appendChild(dot)}
+  if(!ring){ring=document.createElement('div');ring.id='cursor-ring';document.body.appendChild(ring)}
   document.body.appendChild(dot);
   document.body.appendChild(ring);
-  var x=window.innerWidth/2,y=window.innerHeight/2,rx=x,ry=y;
-  document.addEventListener('mousemove',function(e){
+
+  document.documentElement.classList.add('custom-cursor');
+
+  var x=0,y=0,rx=0,ry=0,ready=false;
+  function move(e){
     x=e.clientX;y=e.clientY;
-    dot.style.left=x+'px';dot.style.top=y+'px';
-  },{passive:true});
-  (function loop(){
-    rx+=(x-rx)*0.25;ry+=(y-ry)*0.25;
-    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    if(!ready){
+      ready=true;rx=x;ry=y;
+      document.documentElement.classList.add('cursor-on');
+      dot.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+      ring.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+    }
+  }
+  window.addEventListener('mousemove',move,{passive:true});
+  window.addEventListener('pointermove',move,{passive:true});
+
+  function loop(){
+    rx+=(x-rx)*0.28;
+    ry+=(y-ry)*0.28;
+    if(ready){
+      dot.style.transform='translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%)';
+      ring.style.transform='translate3d('+rx+'px,'+ry+'px,0) translate(-50%,-50%)';
+    }
     requestAnimationFrame(loop);
-  })();
+  }
+  requestAnimationFrame(loop);
+
   document.addEventListener('mouseover',function(e){
     var t=e.target;
-    if(t && t.closest && t.closest('a,button,.card,.proxy-btn,.icon-btn,.theme-opt,.fx-opt,.font-opt,.l-cta,.storm-btn,.link-open'))
-      document.body.classList.add('cursor-hover');
+    if(t&&t.closest&&t.closest('a,button,.card,.proxy-btn,.icon-btn,.theme-opt,.fx-opt,.font-opt,.l-cta,.storm-btn,.link-open'))
+      document.documentElement.classList.add('cursor-hover');
   });
   document.addEventListener('mouseout',function(e){
     var t=e.target;
-    if(t && t.closest && t.closest('a,button,.card,.proxy-btn,.icon-btn,.theme-opt,.fx-opt,.font-opt,.l-cta,.storm-btn,.link-open'))
-      document.body.classList.remove('cursor-hover');
+    if(t&&t.closest&&t.closest('a,button,.card,.proxy-btn,.icon-btn,.theme-opt,.fx-opt,.font-opt,.l-cta,.storm-btn,.link-open'))
+      document.documentElement.classList.remove('cursor-hover');
   });
 })();
+
 
 (function(){
   function goToGames(){var L=document.getElementById('landing'),A=document.getElementById('app');if(L)L.classList.add('hide');if(A){A.classList.add('show');A.style.opacity='1';A.style.visibility='visible'}}
